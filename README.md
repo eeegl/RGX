@@ -1,4 +1,17 @@
-# RGX
+# RGX Documentation
 
-RGX är ett textbehandlingsverktyg som räknar antal ord i en text och tillhandahåller
-användarvänlig implementering av oliga regex-verktyg.
+## Description
+
+RGX is a text filtering tool with the following functionalities:
+
+* Count number of words
+* Count number of characters
+* Syntax highlighting
+* Count number of occurrences of X
+* Find first N occurrences of X
+* Find last N occurrences of X
+* Find all line numbers with X 
+* Remove all search results
+* Copy result to clipboard
+
+© mathiasgrin & eeegl
