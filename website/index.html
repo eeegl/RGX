@@ -1,10 +1,10 @@
 <html lang="en">
 <head>
-    <title>Word Counter</title>
+    <title style="display:none;">Word Counter</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header id="main-header">
@@ -15,14 +15,22 @@
         <textarea name="" id="" cols="30" rows="10">
 
         </textarea>
+        <p>Words: 30</p>
+        <p>Caracters: 300</p>
     </div>
-    <div id="filter">
-        
+    <div class="area" id="filter">
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <div id="buttons">
+            <button class="fbutton">Hitta</button>
+            <button class="fbutton">Ta bort</button>
+            <button class="fbutton">Apply</button>
+        </div>
     </div>
-    <div id="output">
+    <div class="area" id="output">
         <textarea name="" id="" cols="30" rows="10">
             
         </textarea>
+        <button class="fbutton">Copy to clipboard</button>
     </div>
     <footer>
         <p>Copyright &copy; 2022, Word Counter</p>
