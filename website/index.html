@@ -7,31 +7,46 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header id="main-header">
-		<h1>Word Counter</h1>
-	</header>
 
-    <div id="input">
-        <textarea name="" id="" cols="30" rows="10">
 
+    <!-- class container affects all of the body-->
+    <div class="container">
+
+        <!-- Headline top of page-->
+        <div class="box-1">
+            <h1>Text Analyzer</h1>
+            <p> Welcome to Text Analyzer. Copy your text down below,
+                <br> 
+                apply yourpreferred settings and get started!
+            </p>
+        </div>
+
+        <!-- Middle text section-->
+        <div class="area" id="filter">
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <div id="buttons">
+                <button class="fbutton">Hitta</button>
+                <button class="fbutton">Ta bort</button>
+                <button class="fbutton">Apply</button>
+            </div>
+        </div>
+
+        <div id="input">
         </textarea>
+        <br>
         <p>Words: 30</p>
         <p>Caracters: 300</p>
-    </div>
-    <div class="area" id="filter">
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-        <div id="buttons">
-            <button class="fbutton">Hitta</button>
-            <button class="fbutton">Ta bort</button>
-            <button class="fbutton">Apply</button>
         </div>
-    </div>
-    <div class="area" id="output">
-        <textarea name="" id="" cols="30" rows="10">
-            
-        </textarea>
-        <button class="fbutton">Copy to clipboard</button>
-    </div>
+
+        <div class="area" id="output">
+            <textarea name="" id="" cols="30" rows="10">
+                
+            </textarea>
+            <button class="fbutton">Copy to clipboard</button>
+        </div>
+
+</div>
+
     <footer>
         <p>Copyright &copy; 2022, Word Counter</p>
     </footer>

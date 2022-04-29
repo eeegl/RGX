@@ -4,20 +4,37 @@
     flex-direction: column;
 }
 
+/* Settings affecting the whole webpage */
+body{
+    background-color:#f4f4f4;
+    color:#555555;
+
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+/*Container class affects almost the whole document */
+.container{
+    /* Set the width of everything. Percentage instead of pixles makes sure its responsive
+    (try and make the window bigger or smaller) */
+    width:80%;
+    /* Centers everything */
+    margin: auto;
+}
+
 .area {
     padding: 40px;
 }
 
 #input {
-    background: green;
+    
 }
 
 #filter {
-    background: red;
+    
 }
 
 #output {
-    background: blue;
+    
 }
 
 #buttons {
