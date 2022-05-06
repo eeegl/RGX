@@ -8,7 +8,7 @@ const CHAR_SPACE_COUNTER = document.getElementById("char-count-with-space");
 function countWords(text) {
     let words = text.split(/\s+/); // Split at one or more whitespace characters.
     let miscounts = 0; // Words are miscounted when input is a single space or all input is deleted.
-    
+
     // Count occurences of miscounted words.
     for (let i = 0; i < words.length; i++) {
 
@@ -23,23 +23,6 @@ function countWords(text) {
 
 // Count the number of characters (including whitespace) in the input text.
 function countChars(text) {
-    let charCount = countCharsAndSpace(text);
-    let spaceCount = 0;
-
-    // Count number of spaces in text.
-    for (let i = 0; i < text.length; i++) {
-
-        // Count spaces and linebreaks.
-        if (text.charAt(i) === ' ' || text.charAt(i) === '\n') {
-            spaceCount++;
-        }
-    }
-
-    return charCount - spaceCount; // Exclude spaces and linebreaks.
-}
-
-// Count the number of characters (with whitespace) in the input text.
-function countCharsAndSpace(text) {
     let chars = text.split(''); // Split at every character (including whitespace).
     let linebreakCount = 0;
 
@@ -51,7 +34,7 @@ function countCharsAndSpace(text) {
         }
     }
 
-    return chars.length - linebreakCount; // Remove linebreaks.
+    return chars.length - linebreakCount; // Exclude linebreaks.
 }
 
 // Count the number of characters in the input text.
