@@ -23,7 +23,23 @@
 
         <hr>
 
-        <!-- Filtering section -->
+         <!-- Filtering Section-->
+         <form>
+            <section class="filters">
+                <span>Pick filter</span>
+                <br>
+                <!-- Highlight-->
+                <input type="radio" id="highlight" name="filters" value="highlight">
+                <label for="highlight">highlight</label>
+                <!--Remove words containing X-->
+                <input type="radio" id="remove" name="filters" value="remove">
+                <label for="remove">remove</label>
+            </section>
+        </form>
+
+        <hr>
+
+        <!-- Button section -->
         <div class="section" id="filter">
             <textarea name="" id="filter-box" cols="30" rows="1"></textarea>
             <div id="buttons">
@@ -32,6 +48,7 @@
                 <button class="fbutton" id="apply">Apply</button>
             </div>
         </div>
+
 
         <hr>
 
