@@ -23,6 +23,23 @@ function countWords(text) {
 
 // Count the number of characters (including whitespace) in the input text.
 function countChars(text) {
+    let charCount = countCharsAndSpace(text);
+    let spaceCount = 0;
+
+    // Count number of spaces in text.
+    for (let i = 0; i < text.length; i++) {
+
+        // Count spaces and linebreaks.
+        if (text.charAt(i) === ' ' || text.charAt(i) === '\n') {
+            spaceCount++;
+        }
+    }
+
+    return charCount - spaceCount; // Exclude spaces and linebreaks.
+}
+
+// Count the number of characters (with whitespace) in the input text.
+function countCharsAndSpace(text) {
     let chars = text.split(''); // Split at every character (including whitespace).
     let linebreakCount = 0;
 
