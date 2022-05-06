@@ -5,55 +5,43 @@
 }
 
 /* Settings affecting the whole webpage */
-body{
-    background-color:#f4f4f4;
-    color:#555555;
+body {
+    background-color: #f4f4f4;
+    color: #555555;
 
     font-family: "Lucida Console", Monaco, monospace;
 }
 
 /* Container class affects almost the whole document */
-.container{
+.container {
     /* Set the width of everything. Percentage instead of pixles makes sure its responsive
     (try and make the window bigger or smaller) */
-    width:80%;
+    width: 80%;
     /* Centers everything */
     margin: auto;
 }
 
 /* box-1 is the main header section */
-.box-1{
+.box-1 {
     /* Creates space above, below and on the sides */
-   padding:20px;
-   margin:20px;
+    padding: 20px;
+    margin: 20px;
 }
 
 /* Only affect h1 in box-1 (main header) */
-.box-1 h1{
-    text-decoration:underline;
-    Letter-spacing:0.2em;
+.box-1 h1 {
+    text-decoration: underline;
+    Letter-spacing: 0.2em;
 }
 
-.area {
+.section {
     padding: 40px;
 }
 
-.wordsAndCharacters{
-    border:3px;
-    padding:20px;
-    margin:20px;
-}
-
-#input {
-    
-}
-
-#filter {
-    
-}
-
-#output {
-    
+.wordsAndCharacters {
+    border: 3px;
+    padding: 20px;
+    margin: 20px;
 }
 
 #buttons {

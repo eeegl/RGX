@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <title style="display:none;">Word Counter</title>
     <meta charset="UTF-8">
@@ -6,53 +7,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-
-
-    <!-- class container affects all of the body-->
+    <!-- class container affects all of the body -->
     <div class="container">
 
-        <!-- Headline top of page-->
+        <!-- Headline top of page -->
         <div class="box-1">
             <h1>Text Analyzer</h1>
             <p> Welcome to Text Analyzer. Copy your text down below,
-                <br> 
+                <br>
                 apply your preferred settings and get started!
             </p>
         </div>
 
         <hr>
 
-        <!-- Middle text section-->
-        <div class="area" id="filter">
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+        <!-- Filtering section -->
+        <div class="section" id="filter">
+            <textarea name="" id="filter-box" cols="30" rows="1"></textarea>
             <div id="buttons">
                 <button class="fbutton">Hitta</button>
                 <button class="fbutton">Ta bort</button>
-                <button class="fbutton">Apply</button>
+                <button class="fbutton" id="apply">Apply</button>
             </div>
-        </div>
-
-        <!-- Prints out number of words and characters-->
-        <div class="wordsAndCharacters" id="input">
-        </textarea>
-        <br>
-        <p>Words: 30</p>
-        <p>Caracters: 300</p>
         </div>
 
         <hr>
 
-        <!-- Output text box-->
-        <div class="area" id="output">
+        <!-- Input section -->
+        <div class="wordsAndCharacters" id="input">
+            <textarea name="" id="input-box" cols="30" rows="10"></textarea>
+            <br>
+            <p id="word-count">Words: 0</p>
+            <p id="char-count">Characters: 0</p>
+        </div>
+
+        <hr>
+        
+        <!-- Output section -->
+        <div class="section" id="output">
             <textarea name="" id="" cols="30" rows="10">
-                
+
             </textarea>
             <button class="fbutton">Copy to clipboard</button>
         </div>
 
         <hr>
-        
+
         <!-- Copyright Footer -->
         <div>
             <footer>
@@ -60,10 +62,8 @@
             </footer>
         </div>
 
-</div>
-
-
-
-
+    </div>
+    <script src="script.js"></script>
 </body>
+
 </html>
