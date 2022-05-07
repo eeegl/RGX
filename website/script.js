@@ -60,3 +60,15 @@ INPUT_BOX.addEventListener("input", e => {
     CHAR_COUNTER.innerHTML = "Characters: " + countChars(text);
     CHAR_SPACE_COUNTER.innerHTML = "Characters (excluding spaces): " + (countChars(text) - countSpaces(text));
 })
+
+
+// Highlight words functionality below
+function search(){
+    let textToSearch = document.getElementById("text-to-search").value;
+    let paragraph = document.getElementById("paragraph");
+    textToSearch = textToSearch.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+
+    let pattern = new RegExp(`${textToSearch}`,"gi");
+
+    paragraph.innerHTML = paragraph.textContent.replace(pattern, match => `<mark>${match}</mark>`);
+}
