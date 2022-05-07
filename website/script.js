@@ -1,8 +1,10 @@
 // Constant declarations.
 const INPUT_BOX = document.getElementById("input-box");
+const OUTPUT_BOX = document.getElementById("output-box");
 const WORD_COUNTER = document.getElementById("word-count");
 const CHAR_COUNTER = document.getElementById("char-count");
 const CHAR_SPACE_COUNTER = document.getElementById("char-count-with-space");
+const COPY_BUTTON = document.getElementById("copy-button");;
 
 // Count the number of words in the input text.
 function countWords(text) {
@@ -37,11 +39,11 @@ function countChars(text) {
     return chars.length - linebreakCount; // Exclude linebreaks.
 }
 
-// Count the number of characters in the input text.
+// Count the number of single spaces in the input text.
 function countSpaces(text) {
     let spaceCount = 0;
 
-    // Count amount of spaces in text.
+    // Find and count every space.
     for (let i = 0; i < text.length; i++) {
 
         if (text.charAt(i) === ' ') {
@@ -52,13 +54,26 @@ function countSpaces(text) {
     return spaceCount;
 }
 
+// Copy input text to clipboard.
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text);
+}
+
 // Count words and characters and update for every new user input.
-INPUT_BOX.addEventListener("input", e => {
+// Also, print filtered text to output box.
+INPUT_BOX.addEventListener("input", () => {
     let text = INPUT_BOX.value; // Get text input.
     // Update counts.
     WORD_COUNTER.innerHTML = "Words: " + countWords(text);
     CHAR_COUNTER.innerHTML = "Characters: " + countChars(text);
     CHAR_SPACE_COUNTER.innerHTML = "Characters (excluding spaces): " + (countChars(text) - countSpaces(text));
+    // Uptdate text output.
+    OUTPUT_BOX.innerHTML = text; // TODO: change to actual filtered text. Now it only displays input text.
+})
+
+// Copy output text to clipboard when the copy button is clicked.
+COPY_BUTTON.addEventListener("click", () => {
+    copyToClipboard(OUTPUT_BOX.value);
 })
 
 
