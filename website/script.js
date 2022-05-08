@@ -1,8 +1,11 @@
 // Constant declarations.
+const REMOVE_RADIO = document.getElementById("remove");
+const FILTER_TEXT = document.getElementById("filter-box");
 const INPUT_BOX = document.getElementById("input-box");
 const OUTPUT_BOX = document.getElementById("output-box");
 const WORD_COUNTER = document.getElementById("word-count");
 const CHAR_COUNTER = document.getElementById("char-count");
+const FILTER_BUTTON = document.getElementById("filter-button");
 const CHAR_SPACE_COUNTER = document.getElementById("char-count-with-space");
 const COPY_BUTTON = document.getElementById("copy-button");;
 
@@ -68,7 +71,7 @@ INPUT_BOX.addEventListener("input", () => {
     CHAR_COUNTER.innerHTML = "Characters: " + countChars(text);
     CHAR_SPACE_COUNTER.innerHTML = "Characters (excluding spaces): " + (countChars(text) - countSpaces(text));
     // Uptdate text output.
-    OUTPUT_BOX.innerHTML = text; // TODO: change to actual filtered text. Now it only displays input text.
+    //OUTPUT_BOX.innerHTML = text; // TODO: change to actual filtered text. Now it only displays input text.
 })
 
 // Copy output text to clipboard when the copy button is clicked.
@@ -76,7 +79,22 @@ COPY_BUTTON.addEventListener("click", () => {
     copyToClipboard(OUTPUT_BOX.value);
 })
 
+// When you click the Search button, have an if case for every radio button and based on that
+// call a filtering function
+FILTER_BUTTON.onclick = function(){
+    let returnString;
+    if(REMOVE_RADIO.checked) {
+        returnString = remove(INPUT_BOX.value, FILTER_TEXT.value);
+    }
+    OUTPUT_BOX.innerHTML = returnString;
+}
 
+// Remove filtering function
+let remove = (userText, searchText) => {
+    return returnString = userText.replace(searchText, "");
+}
+
+/* This only works with raw text and not <textarea> so I'm skipping this pain the the a** for now
 // Highlight words functionality below
 function search(){
     let textToSearch = document.getElementById("text-to-search").value;
@@ -87,3 +105,4 @@ function search(){
 
     paragraph.innerHTML = paragraph.textContent.replace(pattern, match => `<mark>${match}</mark>`);
 }
+*/
