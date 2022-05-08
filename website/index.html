@@ -15,14 +15,15 @@
         <!-- Headline top of page -->
         <div class="box-1">
             <h1>Text Analyzer</h1>
-            <p> Welcome to Text Analyzer. Copy your text down below,
-                <br>
+            <p id="text-below-main-heading"> Welcome to Text Analyzer. Copy your text down below,
                 apply your preferred settings and get started!
             </p>
         </div>
 
         <hr>
 
+
+        
          <!-- Filtering Section-->
          <form>
             <section class="filters">
@@ -44,16 +45,15 @@
             </div>
         </div>
 
-
         <hr>
 
-        <div id="input-box" contenteditable="true" >
+        <!-- Input section -->
+        <div id="input-box" contenteditable="true">
             Edit your text here...       
         </div>
 
         <hr>
 
-        <!-- Input section -->
         <div class="wordsAndCharacters" id="input">
             <p id="word-count">Words: 0</p>
             <p id="char-count">Characters: 0</p>
@@ -73,9 +73,12 @@
         <hr>
 
         <!-- Copyright Footer -->
-        <div>
+        <div id="footer">
             <footer>
                 <p>Copyright &copy; 2022, Word Analyzer</p>
+                <br>
+                <!-- Link to wikipedia. Opens in new tab-->
+                <a href="https://en.wikipedia.org/wiki/Regular_expression" target="_blank">More on Regex</a>
             </footer>
         </div>
 
