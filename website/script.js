@@ -101,15 +101,13 @@ let remove = (userText, searchText) => {
 }
 
 
-/* This only works with raw text and not <textarea> so I'm skipping this pain the the a** for now
-// Highlight words functionality below
-function search(){
-    let textToSearch = document.getElementById("text-to-search").value;
-    let paragraph = document.getElementById("paragraph");
-    textToSearch = textToSearch.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+/* Trying to highlight */
+FILTER_TEXT.addEventListener("input", () => {
+    let textToHighlight = FILTER_TEXT.value;
+    /* let paragraph = INPUT_BOX */
+    textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    let pattern = new RegExp(`${textToHighlight}`,"gi");
+    INPUT_BOX.innerHTML = INPUT_BOX.textContent.replace(pattern, match => `<mark>${match}</mark>`);
+})
 
-    let pattern = new RegExp(`${textToSearch}`,"gi");
 
-    paragraph.innerHTML = paragraph.textContent.replace(pattern, match => `<mark>${match}</mark>`);
-}
-*/
