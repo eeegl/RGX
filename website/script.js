@@ -9,6 +9,8 @@ const FILTER_BUTTON = document.getElementById("filter-button");
 const CHAR_SPACE_COUNTER = document.getElementById("char-count-with-space");
 const COPY_BUTTON = document.getElementById("copy-button");;
 
+
+
 // Count the number of words in the input text.
 function countWords(text) {
     let words = text.split(/\s+/); // Split at one or more whitespace characters.
@@ -65,7 +67,9 @@ function copyToClipboard(text) {
 // Count words and characters and update for every new user input.
 // Also, print filtered text to output box.
 INPUT_BOX.addEventListener("input", () => {
-    let text = INPUT_BOX.value; // Get text input.
+    // Get text input from our contenteditable dev
+    var contenteditable = document.querySelector('[contenteditable]'),
+    text = contenteditable.textContent;
     // Update counts.
     WORD_COUNTER.innerHTML = "Words: " + countWords(text);
     CHAR_COUNTER.innerHTML = "Characters: " + countChars(text);
@@ -82,17 +86,20 @@ COPY_BUTTON.addEventListener("click", () => {
 // When you click the Search button, have an if case for every radio button and based on that
 // call a filtering function
 FILTER_BUTTON.onclick = function(){
+    var contenteditable = document.querySelector('[contenteditable]'),
+    text = contenteditable.textContent;
     let returnString;
     if(REMOVE_RADIO.checked) {
-        returnString = remove(INPUT_BOX.value, FILTER_TEXT.value);
+        returnString = remove(text, FILTER_TEXT.value);
     }
     OUTPUT_BOX.innerHTML = returnString;
 }
 
 // Remove filtering function
 let remove = (userText, searchText) => {
-    return returnString = userText.replace(searchText, "");
+    return returnString = userText.replaceAll(searchText, "");
 }
+
 
 /* This only works with raw text and not <textarea> so I'm skipping this pain the the a** for now
 // Highlight words functionality below
