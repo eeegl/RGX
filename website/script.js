@@ -110,4 +110,21 @@ FILTER_TEXT.addEventListener("input", () => {
     INPUT_BOX.innerHTML = INPUT_BOX.textContent.replace(pattern, match => `<mark>${match}</mark>`);
 })
 
+let getWordIndices = (searchString) => {
+    let userText = INPUT_VALUE.innerHTML;
+    let words = getWords(searchString);
+    let wordIndices = [];
+    for(let i=0; i<words.length; i++){
+        if (words[i] === searchString){
+            wordIndices.push(i);
+        }
+    }
+    return wordIndices;
+}
+
+let getWords = (text) => {
+    let words = text.split(/\s+/);
+    return words;
+}
+
 
