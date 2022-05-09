@@ -44,14 +44,24 @@ h1 {
     Letter-spacing: 0.2em;
 }
 
+/* Make search highlights inline */
+#input-box, #input-box span {
+    display: inline;
+}
+
 #input-box {
     border: 1px dotted red;
     /* Border radius makes the edges smoother */
     border-radius: 5px;
     height: 200px;
     padding: 10px;
-
 }
+
+.highlight {
+    display: inline;
+    background: yellow;
+}
+
 
 .section {
     padding: 40px;
