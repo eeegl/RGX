@@ -68,7 +68,11 @@ FILTER_TEXT.addEventListener("input", () => {
 // Count amount of matching words and sentence of user input
 FILTER_TEXT.addEventListener("input", () => {
     let word = FILTER_TEXT.value;
-    amountOfWordInText = amountOfSearchedWordInText(word);
+    if (word === '') {
+        amountOfWordInText = 0;
+    } else {
+        amountOfWordInText = amountOfSearchedWordInText(word);
+    }
     WORD_MATCH.innerHTML = "matches: " + amountOfWordInText;
 
 })
