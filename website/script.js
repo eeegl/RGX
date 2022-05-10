@@ -25,7 +25,7 @@ function countWords(text) {
             miscounts++;
         }
     }
-
+    
     return words.length - miscounts; // Exclude miscounts.
 }
 
@@ -105,15 +105,26 @@ let remove = (userText, searchText) => {
     return returnString = userText.replaceAll(searchText, "");
 }
 
-
-/* Trying to highlight */
+// Highlight search query in input box for every user input
 FILTER_TEXT.addEventListener("input", () => {
-    let textToHighlight = FILTER_TEXT.value;
-    /* let paragraph = INPUT_BOX */
-    textToHighlight = textToHighlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-    let pattern = new RegExp(`${textToHighlight}`,"gi");
-    INPUT_BOX.innerHTML = INPUT_BOX.textContent.replace(pattern, match => `<mark>${match}</mark>`);
+    let text = INPUT_BOX.innerHTML;
+    let query = FILTER_TEXT.value;
+    INPUT_BOX.innerHTML = highlight(text, query);
 })
+
+// Add highlighting to search query in text
+let highlight = (text, query) => {
+    // HTML highlighting tags
+    let tagOpen = '<span class="highlight">';
+    let tagClose = '</span>';
+    // Remove current highlighting
+    text = text.replaceAll(tagOpen, '');
+    text = text.replaceAll(tagClose, '');
+    // Add new highlighting
+    let highlighted = tagOpen + query + tagClose;
+    return text.replaceAll(query, highlighted);
+
+}
 
 let getWordIndices = (searchString) => {
     let userText = INPUT_VALUE.innerHTML;
@@ -163,9 +174,3 @@ let getAmountOfSentences = () => {
     let count = (InputTextBox.match(/[a-zA-Z0-9]\.\s/g) || []).length;
     return count;    
 }
-
-
-
-
-
-
