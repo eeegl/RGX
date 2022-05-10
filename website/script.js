@@ -30,12 +30,9 @@ INPUT_BOX.addEventListener("input", () => {
     var contenteditable = document.querySelector('[contenteditable]'),
         text = contenteditable.textContent;
     // Update counts.
-    WORD_COUNTER.innerHTML = "Words: " + countWords(text);
+    WORD_COUNTER.innerHTML = "Words: " + countWords(INPUT_BOX.innerText);
     CHAR_COUNTER.innerHTML = "Characters: " + countChars(text);
     CHAR_SPACE_COUNTER.innerHTML = "Characters (excluding spaces): " + (countChars(text) - countSpaces(text));
-    // Uptdate text output.
-    //OUTPUT_BOX.innerHTML = text; // TODO: change to actual filtered text. Now it only displays input text.
-
     // Count amount of sentences
     amountOfSentencesInText = getAmountOfSentences();
     SENTENCE_COUNT.innerHTML = "sentences: " + amountOfSentencesInText;
@@ -74,7 +71,6 @@ FILTER_TEXT.addEventListener("input", () => {
         amountOfWordInText = amountOfSearchedWordInText(word);
     }
     WORD_MATCH.innerHTML = "matches: " + amountOfWordInText;
-
 })
 
 /*
@@ -83,50 +79,26 @@ FILTER_TEXT.addEventListener("input", () => {
 
 // Count the number of words in the input text.
 let countWords = (text) => {
-    let words = text.split(/\s+/); // Split at one or more whitespace characters.
-    let miscounts = 0; // Words are miscounted when input is a single space or all input is deleted.
-
-    // Count occurences of miscounted words.
-    for (let i = 0; i < words.length; i++) {
-
-        // Every empty string is a miscounted word.
-        if (words[i] === '') {
-            miscounts++;
-        }
-    }
-
-    return words.length - miscounts; // Exclude miscounts.
+    // Return 0 when input contains only non-words
+    if (text.match(/^[^\w]*$/)) { return 0; }
+    // Return number of words
+    return text.match(/\w+/g).length;
 }
 
 // Count the number of characters (including whitespace) in the input text.
 let countChars = (text) => {
-    let chars = text.split(''); // Split at every character (including whitespace).
-    let linebreakCount = 0;
-
-    // Count amount of line breaks in text.
-    for (let i = 0; i < text.length; i++) {
-
-        if (text.charAt(i) === '\n') {
-            linebreakCount++;
-        }
-    }
-
-    return chars.length - linebreakCount; // Exclude linebreaks.
+    // Return 0 for empty input
+    if (text === '') { return 0; }
+    // Return number of characters (excluding linebreaks)
+    return text.match(/[^\n]/g).length;
 }
 
 // Count the number of single spaces in the input text.
 let countSpaces = (text) => {
-    let spaceCount = 0;
-
-    // Find and count every space.
-    for (let i = 0; i < text.length; i++) {
-
-        if (text.charAt(i) === ' ') {
-            spaceCount++;
-        }
-    }
-
-    return spaceCount;
+    // Return 0 for input without spaces
+    if (text.match(/^[^\s]*$/)) { return 0; }
+    // Return number of spaces
+    return text.match(/\s/g).length;
 }
 
 // Returns amount of searchWord in Input box
