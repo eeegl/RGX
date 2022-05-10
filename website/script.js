@@ -7,8 +7,9 @@ const WORD_COUNTER = document.getElementById("word-count");
 const CHAR_COUNTER = document.getElementById("char-count");
 const FILTER_BUTTON = document.getElementById("filter-button");
 const CHAR_SPACE_COUNTER = document.getElementById("char-count-with-space");
-const COPY_BUTTON = document.getElementById("copy-button");;
-
+const COPY_BUTTON = document.getElementById("copy-button");
+const WORD_MATCH = document.getElementById("word-match");
+const SENTENCE_COUNT = document.getElementById("sentence-count");
 
 
 // Count the number of words in the input text.
@@ -76,6 +77,10 @@ INPUT_BOX.addEventListener("input", () => {
     CHAR_SPACE_COUNTER.innerHTML = "Characters (excluding spaces): " + (countChars(text) - countSpaces(text));
     // Uptdate text output.
     //OUTPUT_BOX.innerHTML = text; // TODO: change to actual filtered text. Now it only displays input text.
+
+    // Count amount of sentences
+    amountOfSentencesInText = getAmountOfSentences();
+    SENTENCE_COUNT.innerHTML = "sentences: " + amountOfSentencesInText;
 })
 
 // Copy output text to clipboard when the copy button is clicked.
@@ -122,9 +127,45 @@ let getWordIndices = (searchString) => {
     return wordIndices;
 }
 
+// Splits text and returns array with each word
 let getWords = (text) => {
     let words = text.split(/\s+/);
     return words;
 }
+
+// Count amount of matching words and sentence of user input
+FILTER_TEXT.addEventListener("input", () => {
+    let word = FILTER_TEXT.value;
+    amountOfWordInText = amountOfSearchedWordInText(word);
+    WORD_MATCH.innerHTML = "matches: " + amountOfWordInText;
+    
+})
+
+// Returns amount of searchWord in Input box
+let amountOfSearchedWordInText = (searchWord) => {
+    InputTextBox = getTextFromInputBox();
+    let regexExpression = new RegExp(searchWord, 'g');
+    let count = (InputTextBox.match(regexExpression) || []).length;
+    return count;
+}
+
+// Gets text from input box
+let getTextFromInputBox = () => {
+    var contenteditable = document.querySelector('[contenteditable]');
+    text = contenteditable.textContent;
+    return text;
+}
+
+// Returns amount of scentences
+let getAmountOfSentences = () => {
+    InputTextBox = getTextFromInputBox();
+    getWords(InputTextBox);
+    let count = (InputTextBox.match(/[a-zA-Z0-9]\.\s/g) || []).length;
+    return count;    
+}
+
+
+
+
 
 
