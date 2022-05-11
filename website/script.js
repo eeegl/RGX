@@ -19,20 +19,51 @@ const CHAR_SPACE_COUNTER = document.getElementById("char-count-with-space");
 const SENTENCE_COUNT = document.getElementById("sentence-count");
 const WORD_MATCH = document.getElementById("word-match");
 
+let searchIndex = 1;
+let searchHits = 0;
+
 /*
  * Event listeners.
  */
 
+// Keyboard input
+window.addEventListener("keydown", event => {
+
+    switch (event.key) {
+        case "Enter" :
+            document.execCommand("insertLineBreak");
+            event.preventDefault();
+            break;
+        // Go backward in search selection
+        case 'ArrowLeft':
+            console.log(event.key);
+            if (searchIndex > 1) { searchIndex--; }
+            highlightAll();
+            highlightSelection(searchIndex);
+            break;
+        // Go forward in search selection
+        case 'ArrowRight':
+            console.log(event.key);
+            if (searchIndex < searchHits) { searchIndex++; }
+            highlightAll();
+            highlightSelection(searchIndex);
+            break;
+        default:
+            break;
+    }
+})
+
 // Count words and characters and update for every new user input.
 // Also, print filtered text to output box.
 INPUT_BOX.addEventListener("input", () => {
+    searchHits = getSearchHitCount();
     // Get text input from our contenteditable dev
     var contenteditable = document.querySelector('[contenteditable]'),
         text = contenteditable.textContent;
     // Update counts.
-    WORD_COUNTER.innerHTML = "Words: " + countWords(INPUT_BOX.innerText);
-    CHAR_COUNTER.innerHTML = "Characters: " + countChars(text);
-    CHAR_SPACE_COUNTER.innerHTML = "Characters (excluding spaces): " + (countChars(text) - countSpaces(text));
+    WORD_COUNTER.innerHTML = "Words: " + getWordCount();
+    CHAR_COUNTER.innerHTML = "Characters: " + getCharCount();
+    CHAR_SPACE_COUNTER.innerHTML = "Characters (excluding spaces): " + (getCharCount() - getSpaceCount());
     // Count amount of sentences
     amountOfSentencesInText = getAmountOfSentences();
     SENTENCE_COUNT.innerHTML = "sentences: " + amountOfSentencesInText;
@@ -57,20 +88,10 @@ FILTER_BUTTON.onclick = function () {
 
 // Highlight search query in input box for every user input
 FILTER_TEXT.addEventListener("input", () => {
-    let text = INPUT_BOX.innerHTML;
-    let query = FILTER_TEXT.value;
-    INPUT_BOX.innerHTML = highlight(text, query);
-})
-
-// Count amount of matching words and sentence of user input
-FILTER_TEXT.addEventListener("input", () => {
-    let word = FILTER_TEXT.value;
-    if (word === '') {
-        amountOfWordInText = 0;
-    } else {
-        amountOfWordInText = amountOfSearchedWordInText(word);
-    }
-    WORD_MATCH.innerHTML = "matches: " + amountOfWordInText;
+    highlightAll();
+    highlightSelection(searchIndex);
+    searchHits = getSearchHitCount();
+    WORD_MATCH.innerHTML = "matches: " + getSearchHitCount();
 })
 
 /*
@@ -78,35 +99,32 @@ FILTER_TEXT.addEventListener("input", () => {
  */
 
 // Count the number of words in the input text.
-let countWords = (text) => {
-    // Return 0 when input contains only non-words
-    if (text.match(/^[^\w]*$/)) { return 0; }
+let getWordCount = () => {
+    let text = getTextPlain();
+    let word = /\w+/g;
+    let onlyNonWords = /^[^\w]*$/;
+    if (text.match(onlyNonWords)) { return 0; }
     // Return number of words
-    return text.match(/\w+/g).length;
+    return text.match(word).length;
 }
 
 // Count the number of characters (including whitespace) in the input text.
-let countChars = (text) => {
-    // Return 0 for empty input
-    if (text === '') { return 0; }
-    // Return number of characters (excluding linebreaks)
-    return text.match(/[^\n]/g).length;
+let getCharCount = () => {
+    let text = getTextFromInputBox();
+    // All characters except linebreaks
+    let character = /[^\n]/g;
+    if (isEmpty(text)) { return 0; }
+    return text.match(character).length;
 }
 
 // Count the number of single spaces in the input text.
-let countSpaces = (text) => {
-    // Return 0 for input without spaces
-    if (text.match(/^[^\s]*$/)) { return 0; }
+let getSpaceCount = () => {
+    let text = getTextFromInputBox();
+    let space = /\s/g;
+    let onlyNonSpace = /^[^\s]*$/;
+    if (text.match(onlyNonSpace)) { return 0; }
     // Return number of spaces
-    return text.match(/\s/g).length;
-}
-
-// Returns amount of searchWord in Input box
-let amountOfSearchedWordInText = (searchWord) => {
-    InputTextBox = getTextFromInputBox();
-    let regexExpression = new RegExp(searchWord, 'g');
-    let count = (InputTextBox.match(regexExpression) || []).length;
-    return count;
+    return text.match(space).length;
 }
 
 // Returns amount of scentences
@@ -136,6 +154,10 @@ let getWordIndices = (searchString) => {
     return wordIndices;
 }
 
+let isEmpty = text => {
+    return text === '';
+}
+
 // Splits text and returns array with each word
 let getWords = (text) => {
     let words = text.split(/\s+/);
@@ -152,15 +174,50 @@ let copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
 }
 
-// Add highlighting to search query in text
-let highlight = (text, query) => {
-    // HTML highlighting tags
-    let tagOpen = '<span class="highlight">';
-    let tagClose = '</span>';
-    // Remove current highlighting
-    text = text.replaceAll(tagOpen, '');
-    text = text.replaceAll(tagClose, '');
-    // Add new highlighting
-    let highlighted = tagOpen + query + tagClose;
-    return text.replaceAll(query, highlighted);
+// Get search query
+let getQuery = () => {
+    return FILTER_TEXT.value;
+}
+
+// Get text in plain format
+let getTextPlain = () => {
+    return INPUT_BOX.innerText;
+}
+
+// Get text in HTML format
+let getTextHTML = () => {
+    return INPUT_BOX.innerHTML;
+}
+
+// Set text HTML
+let setTextHTML = input => {
+    INPUT_BOX.innerHTML = input;
+}
+
+// Get number of search hits
+let getSearchHitCount = () => {
+    // Return 0 for empty query
+    if (getQuery() === '') { return 0; }
+    // Return number of matches for query
+    let query = RegExp(getQuery(), 'g');
+    return (getTextPlain().match(query) || []).length;
+}
+
+// Update highlighting for all search hits
+let highlightAll = () => {
+    let query = getQuery();
+    let highlight = '<span class="highlight-all">' + query + '</span>';
+    let highlightedText = getTextPlain().replaceAll(query, highlight);
+    setTextHTML(highlightedText);
+}
+
+// Update highlighting for selected search hit
+let highlightSelection = index => {
+    // CSS class for highlighting current selection
+    let highlight = 'highlight-selection';
+    // Defines selector for span at index
+    let selector = '#input-box span:nth-of-type(' + index + ')';
+    let selected = document.querySelector(selector);
+    // Only add highlight if something was selected
+    if (selected) { selected.classList.add(highlight); }
 }

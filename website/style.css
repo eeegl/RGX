@@ -6,6 +6,8 @@
     flex-direction: column;
 }
 
+*[contenteditable="true"]{display: inline-block;}
+
 /* Settings affecting the whole webpage */
 body {
     background-color: aliceblue;
@@ -57,9 +59,14 @@ h1 {
     padding: 10px;
 }
 
-.highlight {
+.highlight-all {
     display: inline;
     background: yellow;
+}
+
+.highlight-selection {
+    display: inline;
+    background: lime;
 }
 
 
