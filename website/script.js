@@ -92,6 +92,7 @@ TEXT.addEventListener('focus', () => {
 window.addEventListener("keydown", event => {
     readData();
     changeCurrentMatch(event.key); // Cycle through matches with arrow keys
+    updateCounts(); // Needs to be after change to current match to know position
 })
 
 /* Copy text to user clipboard */
@@ -171,8 +172,13 @@ let updateCounts = () => {
     WORDS.innerHTML = "Words: " + getWordCount();
     CHARS.innerHTML = "Characters: " + getCharCount();
     SPACES.innerHTML = "Characters (excluding spaces): " + (getCharCount() - getSpaceCount());
-    MATCHES.innerHTML = "Matches: " + getMatchCount();
     SENTENCES.innerHTML = "Sentences: " + getSentenceCount();
+    // Index of current match against number of total matches
+    if (isEmpty(search) || numOfMatches === 0) {
+        MATCHES.innerHTML = 'Matches: 0/0';
+    } else {
+        MATCHES.innerHTML = 'Matches: ' + index + '/' + numOfMatches;
+    }
 }
 
 /* Copy input text to clipboard */
