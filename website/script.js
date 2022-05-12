@@ -1,93 +1,103 @@
-/* 
- * Constant declarations.
+/*
+ *
+ * RGX / Text Analyzer is an online text editing and filtering tool,
+ * created by Mathias Grindsäter and Örn Segerstedt.
+ * 
+ * This file handles the functionality of the application.
+ *
  */
 
-// Text boxes
-const FILTER_TEXT = document.getElementById("filter-box");
-const INPUT_BOX = document.getElementById("input-box");
-const OUTPUT_BOX = document.getElementById("output-box");
-
-// Buttons
-const REMOVE_RADIO = document.getElementById("remove");
-const FILTER_BUTTON = document.getElementById("filter-button");
-const COPY_BUTTON = document.getElementById("copy-button");
-const CLEAR_BUTTON = document.getElementById("clear-button");
-
-// Counters
-const WORD_COUNTER = document.getElementById("word-count");
-const CHAR_COUNTER = document.getElementById("char-count");
-const CHAR_SPACE_COUNTER = document.getElementById("char-count-with-space");
-const SENTENCE_COUNT = document.getElementById("sentence-count");
-const WORD_MATCH = document.getElementById("word-match");
-const PARAGRAPH_COUNT = document.getElementById("paragraph-count");
-const MOST_COMMON_WORD = document.getElementById("most-common-word");
+/* * * * * * * * * * * * * * * * * * *
+ *                                   *
+ *                                   *
+ *       – TABLE OF CONTENTS –       *
+ *                                   *
+ *      I....Elements and data       *
+ *      II...Event listeners         *
+ *      III..Functions               *
+ *       :. i....Text handling       *
+ *       :. ii...Counting            *
+ *       :. iii..Helpers             *
+ *                                   *
+ *                                   *
+ *    © 2022 mathiasgrin & eeegl     *
+ *                                   *
+ *                                   *
+ * * * * * * * * * * * * * * * * * * */
 
 /*
- * Event listeners.
+ *
+ * I. ELEMENTS AND DATA
+ * 
  */
 
-// Count words and characters and update for every new user input.
-// Also, print filtered text to output box.
-INPUT_BOX.addEventListener("input", () => {
-    // Get text input from our contenteditable dev
-    var contenteditable = document.querySelector('[contenteditable]'),
-        text = contenteditable.textContent;
-    // Update counts.
-    WORD_COUNTER.innerHTML = "Words: " + countWords(text);
-    CHAR_COUNTER.innerHTML = "Characters: " + countChars(text);
-    CHAR_SPACE_COUNTER.innerHTML = "Characters (excluding spaces): " + (countChars(text) - countSpaces(text));
-    // Uptdate text output.
-    //OUTPUT_BOX.innerHTML = text; // TODO: change to actual filtered text. Now it only displays input text.
+/* TEXT */
+const SEARCH = document.getElementById("filter-box"); // Same as FILTER_TEXT
+const TEXT = document.getElementById("input-v2-textbox");
+const HIGHLIGHT = document.getElementById("input-v2-highlight");
+const COPY = document.getElementById("copy-button"); // Same as COPY_BUTTON
 
-    // Count amount of sentences
-    amountOfSentencesInText = getAmountOfSentences();
-    SENTENCE_COUNT.innerHTML = "sentences: " + amountOfSentencesInText;
+/* COUNTERS */
+const WORDS = document.getElementById("word-count");
+const CHARS = document.getElementById("char-count");
+const SPACES = document.getElementById("char-count-with-space");
+const SENTENCES = document.getElementById("sentence-count");
+const MATCHES = document.getElementById("word-match");
 
-    // Count amount of paragraphs
-    amountOfParagraphs = getAmountOfParagraphs();
-    PARAGRAPH_COUNT.innerHTML = "paragraphs: " + amountOfParagraphs;
+/* BUTTONS */
+const REMOVE_RADIO = document.getElementById("remove");
+const FILTER_BUTTON = document.getElementById("filter-button");
 
-    // Count most common word
-    let textInInputBox = INPUT_BOX.innerHTML;
-    let wordsInInputBox = getWords(textInInputBox);
-    let mostCommonWord = getMostCommonWords(wordsInInputBox);
-    MOST_COMMON_WORD.innerHTML = "Most Common Word: " + mostCommonWord[0] + " " + mostCommonWord[1];
+/* DATA */
+let index = 1; // Start att first match
+let numOfMatches = 0;
+let search = '';
+let text = '';
+
+/*
+ *
+ * II. EVENT LISTENERS
+ * 
+ */
+
+/* Update text when user types into textbox */
+TEXT.addEventListener('input', () => {
+    readData();
+    setHighlightText(text);
+    highlightMatches();
+    markCurrentMatch();
+    updateCounts();
 })
 
-// Copy output text to clipboard when the copy button is clicked.
-COPY_BUTTON.addEventListener("click", () => {
-    copyToClipboard(OUTPUT_BOX.value);
+/* Update text when user types into search bar */
+SEARCH.addEventListener('input', () => {
+    readData();
+    setHighlightText(text);
+    highlightMatches();
+    markCurrentMatch();
+    updateCounts();
 })
 
-// When you click the Search button, have an if case for every radio button and based on that
-// call a filtering function
-FILTER_BUTTON.onclick = function () {
-    var contenteditable = document.querySelector('[contenteditable]'),
-        text = contenteditable.textContent;
-    let returnString;
-    if (REMOVE_RADIO.checked) {
-        returnString = remove(text, FILTER_TEXT.value);
-    }
-    OUTPUT_BOX.innerHTML = returnString;
-}
-
-// Highlight search query in input box for every user input
-FILTER_TEXT.addEventListener("input", () => {
-    let text = INPUT_BOX.innerHTML;
-    let query = FILTER_TEXT.value;
-    INPUT_BOX.innerHTML = highlight(text, query);
+/* Sync highlight scrolling to text scrolling */
+// When the textbox is focused…
+TEXT.addEventListener('focus', () => {
+    // …listen to scroll inside the textbox…
+    TEXT.addEventListener('scroll', () => {
+        // …and set highlight scroll position equal to text scroll position.
+        HIGHLIGHT.scrollTop = TEXT.scrollTop;
+    })
 })
 
-// Count amount of matching words and sentence of user input
-FILTER_TEXT.addEventListener("input", () => {
-    // Amount of matches
-    let word = FILTER_TEXT.value;
-    if (word === '') {
-        amountOfWordInText = 0;
-    } else {
-        amountOfWordInText = amountOfSearchedWordInText(word);
-    }
-    WORD_MATCH.innerHTML = "matches: " + amountOfWordInText;
+/* Handle key presses */
+window.addEventListener("keydown", event => {
+    readData();
+    changeCurrentMatch(event.key); // Cycle through matches with arrow keys
+    updateCounts(); // Needs to be after change to current match to know position
+})
+
+/* Copy text to user clipboard */
+COPY.addEventListener("click", () => {
+    copyToClipboard();
 })
 
 //Clear button clears all counters and resets their value
@@ -113,88 +123,177 @@ CLEAR_BUTTON.onclick = function () {
 }
 
 /*
- * Function declarations.
+ *
+ * III. FUNCTIONS
+ * 
  */
 
-// Get amount of paragraphs in input text (DOESN*T WORK WITH CONTENTEDITABLE FOR NOW :( )
-let getAmountOfParagraphs = () => {
-    let text = INPUT_BOX.innerHTML;
-    let count = (text.match(/\n/g) || []).length;
-    return count;
+/*
+* i. TEXT HANDLING
+*/
+
+/* Read current data */
+let readData = () => {
+    text = getText();
+    search = getSearch();
+    numOfMatches = getMatchCount();
 }
 
+/* Highlight all matches */
+let highlightMatches = () => {
+    if (isEmpty(search)) { removeHighlighting(text); }
+    // Add new highlighting
+    let highlighted = text.replaceAll(search, `<mark>${search}</mark>`);
+    // Update text
+    setHighlightText(highlighted);
+}
+
+/* Mark currently selected match */
+let markCurrentMatch = () => {
+    // Get selection at index
+    let selected = HIGHLIGHT.querySelector('mark:nth-of-type(' + index + ')');
+    // Only mark selected if it exists
+    if (selected) { selected.classList.add('selected'); }
+}
+
+/* Clear current highlighting */
+let removeHighlighting = () => {
+    // Clear selected
+    let noSelection = text.replace(/\s*class="selected"/g, '');
+    // Clear highlighting
+    let noHighlight = noSelection.replace(/<\/?mark>/g, '');
+    // Update text
+    setHighlightText(noHighlight);
+}
+
+/* Change highlighting selection */
+let changeCurrentMatch = key => {
+    // Check which key was pressed
+    switch (key) {
+        // Go backward in search selection
+        case 'ArrowLeft':
+            // Stop when first match is reached
+            if (index > 1) { index--; }
+            highlightMatches();
+            markCurrentMatch();
+            break;
+        // Go forward in search selection
+        case 'ArrowRight':
+            // Stop when last match is reached
+            if (index < numOfMatches) { index++; }
+            highlightMatches();
+            markCurrentMatch();
+            break;
+        default:
+            break;
+    }
+}
+
+/* Update text counts */
+let updateCounts = () => {
+    WORDS.innerHTML = "Words: " + getWordCount();
+    CHARS.innerHTML = "Characters: " + getCharCount();
+    SPACES.innerHTML = "Characters (excluding spaces): " + (getCharCount() - getSpaceCount());
+    SENTENCES.innerHTML = "Sentences: " + getSentenceCount();
+    // Index of current match against number of total matches
+    if (isEmpty(search) || numOfMatches === 0) {
+        MATCHES.innerHTML = 'Matches: 0/0';
+    } else {
+        MATCHES.innerHTML = 'Matches: ' + index + '/' + numOfMatches;
+    }
+}
+
+/* Copy input text to clipboard */
+let copyToClipboard = () => {
+    navigator.clipboard.writeText(text);
+}
+
+/*
+* ii. COUNTING
+*/
 
 // Count the number of words in the input text.
-let countWords = (text) => {
-    let words = text.split(/\s+/); // Split at one or more whitespace characters.
-    let miscounts = 0; // Words are miscounted when input is a single space or all input is deleted.
-
-    // Count occurences of miscounted words.
-    for (let i = 0; i < words.length; i++) {
-
-        // Every empty string is a miscounted word.
-        if (words[i] === '') {
-            miscounts++;
-        }
-    }
-
-    return words.length - miscounts; // Exclude miscounts.
+let getWordCount = () => {
+    let word = /\w+/g;
+    let onlyNonWords = /^[^\w]*$/;
+    if (text.match(onlyNonWords)) { return 0; }
+    // Return number of words
+    return text.match(word).length;
 }
 
 // Count the number of characters (including whitespace) in the input text.
-let countChars = (text) => {
-    let chars = text.split(''); // Split at every character (including whitespace).
-    let linebreakCount = 0;
-
-    // Count amount of line breaks in text.
-    for (let i = 0; i < text.length; i++) {
-
-        if (text.charAt(i) === '\n') {
-            linebreakCount++;
-        }
-    }
-
-    return chars.length - linebreakCount; // Exclude linebreaks.
+let getCharCount = () => {
+    // All characters except linebreaks
+    let character = /[^\n]/g;
+    let onlyNonChars = /^\n*$/;
+    if (text.match(onlyNonChars)) { return 0; }
+    // Return number of characters
+    return text.match(character).length;
 }
 
 // Count the number of single spaces in the input text.
-let countSpaces = (text) => {
-    let spaceCount = 0;
-
-    // Find and count every space.
-    for (let i = 0; i < text.length; i++) {
-
-        if (text.charAt(i) === ' ') {
-            spaceCount++;
-        }
-    }
-
-    return spaceCount;
-}
-
-// Returns amount of searchWord in Input box
-let amountOfSearchedWordInText = (searchWord) => {
-    InputTextBox = getTextFromInputBox();
-    let regexExpression = new RegExp(searchWord, 'g');
-    let count = (InputTextBox.match(regexExpression) || []).length;
-    return count;
+let getSpaceCount = () => {
+    let space = /\ /g
+    let onlyNonSpace = /^[^\ ]*$/;
+    if (text.match(onlyNonSpace)) { return 0; }
+    // Return number of spaces
+    return text.match(space).length;
 }
 
 // Returns amount of scentences
-let getAmountOfSentences = () => {
-    InputTextBox = getTextFromInputBox();
-    getWords(InputTextBox);
-    let count = (InputTextBox.match(/[a-zA-Z0-9]\.\s/g) || []).length;
-    return count;
+let getSentenceCount = () => {
+    let sentence = /[a-zA-Z0-9]\.\s/g;
+    return (text.match(sentence) || []).length;
 }
 
-// Gets text from input box
-let getTextFromInputBox = () => {
-    var contenteditable = document.querySelector('[contenteditable]');
-    text = contenteditable.textContent;
-    return text;
+/* Get number of matches */
+let getMatchCount = () => {
+    // Return 0 for empty search
+    if (getSearch() === '') { return 0; }
+    // 
+    let search = RegExp(getSearch(), 'g');
+    // Return number of matches for search
+    return (getText().match(search) || []).length;
 }
 
+/* 
+* iii. HELPERS 
+*/
+
+let getSearch = () => {
+    return SEARCH.value;
+}
+
+let getText = () => {
+    return TEXT.value;
+}
+
+let setHighlightText = text => {
+    HIGHLIGHT.innerHTML = text;
+}
+
+let isEmpty = text => {
+    return text === '';
+}
+
+/* * * * * * *
+ *           *
+ * OLD CODE  *
+ *           *
+ * * * * * * */
+
+// Constants
+const FILTER_TEXT = document.getElementById("filter-box");
+const INPUT_BOX = document.getElementById("input-box");
+const OUTPUT_BOX = document.getElementById("output-box");
+const COPY_BUTTON = document.getElementById("copy-button");
+const WORD_COUNTER = document.getElementById("word-count");
+const CHAR_COUNTER = document.getElementById("char-count");
+const CHAR_SPACE_COUNTER = document.getElementById("char-count-with-space");
+const SENTENCE_COUNT = document.getElementById("sentence-count");
+const WORD_MATCH = document.getElementById("word-match");
+
+// Functions
 let getWordIndices = (searchString) => {
     let userText = INPUT_VALUE.innerHTML;
     let words = getWords(searchString);
@@ -213,52 +312,19 @@ let getWords = (text) => {
     return words;
 }
 
+// When you click the Search button, have an if case for every radio button and based on that
+// call a filtering function
+FILTER_BUTTON.onclick = function () {
+    var contenteditable = document.querySelector('[contenteditable]'),
+        text = contenteditable.textContent;
+    let returnString;
+    if (REMOVE_RADIO.checked) {
+        returnString = remove(text, SEARCH.value);
+    }
+    OUTPUT_BOX.innerHTML = returnString;
+}
+
 // Remove filtering function
 let remove = (userText, searchText) => {
     return returnString = userText.replaceAll(searchText, "");
-}
-
-// Copy input text to clipboard.
-let copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text);
-}
-
-// Add highlighting to search query in text
-let highlight = (text, query) => {
-    // HTML highlighting tags
-    let tagOpen = '<span class="highlight">';
-    let tagClose = '</span>';
-    // Remove current highlighting
-    text = text.replaceAll(tagOpen, '');
-    text = text.replaceAll(tagClose, '');
-    // Add new highlighting
-    let highlighted = tagOpen + query + tagClose;
-    return text.replaceAll(query, highlighted);
-}
-
-// Returns an array with the most common 1 word and its frequency
-let getMostCommonWords = (wordsInputArray) => {
-    let hashMapAllWordsAndFrequency = new Map();
-    for(let i = 0; i < wordsInputArray.length; i++){
-        // If words already exists in hashMap, add +1 to its value.
-        if(hashMapAllWordsAndFrequency.has(wordsInputArray[i])){
-            hashMapAllWordsAndFrequency.set(wordsInputArray[i], hashMapAllWordsAndFrequency.get(wordsInputArray[i]) + 1);
-        } else { //else add it and give it value 1
-            hashMapAllWordsAndFrequency.set(wordsInputArray[i], 1);
-        }
-    }
-
-    let maxCount = 0;
-    let maxWord;
-
-    hashMapAllWordsAndFrequency.forEach((value, key) => {
-        if (maxCount < value){
-            maxWord = key;
-            maxCount = value;
-        }
-    });
-
-    returnArray = [maxWord, maxCount];
-
-    return returnArray;    
 }
