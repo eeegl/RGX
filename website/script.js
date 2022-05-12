@@ -11,6 +11,7 @@ const OUTPUT_BOX = document.getElementById("output-box");
 const REMOVE_RADIO = document.getElementById("remove");
 const FILTER_BUTTON = document.getElementById("filter-button");
 const COPY_BUTTON = document.getElementById("copy-button");
+const CLEAR_BUTTON = document.getElementById("clear-button");
 
 // Counters
 const WORD_COUNTER = document.getElementById("word-count");
@@ -18,6 +19,8 @@ const CHAR_COUNTER = document.getElementById("char-count");
 const CHAR_SPACE_COUNTER = document.getElementById("char-count-with-space");
 const SENTENCE_COUNT = document.getElementById("sentence-count");
 const WORD_MATCH = document.getElementById("word-match");
+const PARAGRAPH_COUNT = document.getElementById("paragraph-count");
+const MOST_COMMON_WORD = document.getElementById("most-common-word");
 
 /*
  * Event listeners.
@@ -39,6 +42,16 @@ INPUT_BOX.addEventListener("input", () => {
     // Count amount of sentences
     amountOfSentencesInText = getAmountOfSentences();
     SENTENCE_COUNT.innerHTML = "sentences: " + amountOfSentencesInText;
+
+    // Count amount of paragraphs
+    amountOfParagraphs = getAmountOfParagraphs();
+    PARAGRAPH_COUNT.innerHTML = "paragraphs: " + amountOfParagraphs;
+
+    // Count most common word
+    let textInInputBox = INPUT_BOX.innerHTML;
+    let wordsInInputBox = getWords(textInInputBox);
+    let mostCommonWord = getMostCommonWords(wordsInInputBox);
+    MOST_COMMON_WORD.innerHTML = "Most Common Word: " + mostCommonWord[0] + " " + mostCommonWord[1];
 })
 
 // Copy output text to clipboard when the copy button is clicked.
@@ -67,6 +80,7 @@ FILTER_TEXT.addEventListener("input", () => {
 
 // Count amount of matching words and sentence of user input
 FILTER_TEXT.addEventListener("input", () => {
+    // Amount of matches
     let word = FILTER_TEXT.value;
     if (word === '') {
         amountOfWordInText = 0;
@@ -74,12 +88,41 @@ FILTER_TEXT.addEventListener("input", () => {
         amountOfWordInText = amountOfSearchedWordInText(word);
     }
     WORD_MATCH.innerHTML = "matches: " + amountOfWordInText;
-
 })
+
+//Clear button clears all counters and resets their value
+CLEAR_BUTTON.onclick = function () {
+    INPUT_BOX.innerHTML = "";
+    WORD_COUNTER.value = 0;
+    WORD_COUNTER.innerHTML = "Words: 0";
+
+    CHAR_COUNTER.value = 0;
+    CHAR_COUNTER.innerHTML = "Characters: 0";
+
+    CHAR_SPACE_COUNTER.value = 0;
+    CHAR_SPACE_COUNTER.innerHTML = "Characters (excluding spaces): 0";
+
+    WORD_MATCH.value = 0;
+    WORD_MATCH.innerHTML = "Matches: 0";
+
+    SENTENCE_COUNT.value = 0;
+    SENTENCE_COUNT.innerHTML = "Sentences: 0";
+    
+    MOST_COMMON_WORD.value = 0;
+    MOST_COMMON_WORD.innerHTML = "Most common word: 0";
+}
 
 /*
  * Function declarations.
  */
+
+// Get amount of paragraphs in input text (DOESN*T WORK WITH CONTENTEDITABLE FOR NOW :( )
+let getAmountOfParagraphs = () => {
+    let text = INPUT_BOX.innerHTML;
+    let count = (text.match(/\n/g) || []).length;
+    return count;
+}
+
 
 // Count the number of words in the input text.
 let countWords = (text) => {
@@ -191,4 +234,31 @@ let highlight = (text, query) => {
     // Add new highlighting
     let highlighted = tagOpen + query + tagClose;
     return text.replaceAll(query, highlighted);
+}
+
+// Returns an array with the most common 1 word and its frequency
+let getMostCommonWords = (wordsInputArray) => {
+    let hashMapAllWordsAndFrequency = new Map();
+    for(let i = 0; i < wordsInputArray.length; i++){
+        // If words already exists in hashMap, add +1 to its value.
+        if(hashMapAllWordsAndFrequency.has(wordsInputArray[i])){
+            hashMapAllWordsAndFrequency.set(wordsInputArray[i], hashMapAllWordsAndFrequency.get(wordsInputArray[i]) + 1);
+        } else { //else add it and give it value 1
+            hashMapAllWordsAndFrequency.set(wordsInputArray[i], 1);
+        }
+    }
+
+    let maxCount = 0;
+    let maxWord;
+
+    hashMapAllWordsAndFrequency.forEach((value, key) => {
+        if (maxCount < value){
+            maxWord = key;
+            maxCount = value;
+        }
+    });
+
+    returnArray = [maxWord, maxCount];
+
+    return returnArray;    
 }

@@ -2,7 +2,8 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    display: flex;
+    /* display: flex; */
+    display: block;
     flex-direction: column;
 }
 
@@ -53,8 +54,10 @@ h1 {
     border: 1px dotted red;
     /* Border radius makes the edges smoother */
     border-radius: 5px;
-    height: 200px;
-    padding: 10px;
+    height: 80px;
+    padding: 100px;
+    width: 400px;
+    margin-top: 40px;
 }
 
 .highlight {
@@ -67,11 +70,21 @@ h1 {
     padding: 40px;
 }
 
+
+.counter {
+    display: inline-block;
+    width: 10%;
+    height:100px;
+    font-size: 13;
+}
+
+/*
 .wordsAndCharacters {
     border: 3px;
     padding: 20px;
     margin: 20px;
 }
+*/
 
 #buttons {
     flex-direction: row;
