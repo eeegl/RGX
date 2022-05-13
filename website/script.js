@@ -84,7 +84,7 @@ TEXT.addEventListener('focus', () => {
     // …listen to scroll inside the textbox…
     TEXT.addEventListener('scroll', () => {
         // …and set highlight scroll position equal to text scroll position.
-        HIGHLIGHT.scrollTop = TEXT.scrollTop;
+        syncTextAndHighlight();
     })
 })
 
@@ -129,7 +129,7 @@ let highlightMatches = () => {
 /* Mark currently selected match */
 let markCurrentMatch = () => {
     // Get selection at index
-    let selected = HIGHLIGHT.querySelector('mark:nth-of-type(' + index + ')');
+    let selected = getCurrentMatch();
     // Only mark selected if it exists
     if (selected) { selected.classList.add('selected'); }
 }
@@ -146,25 +146,53 @@ let removeHighlighting = () => {
 
 /* Change highlighting selection */
 let changeCurrentMatch = key => {
+
     // Check which key was pressed
     switch (key) {
         // Go backward in search selection
         case 'ArrowLeft':
             // Stop when first match is reached
-            if (index > 1) { index--; }
+            if (index > 1) { 
+                index--;
+                jumpToMatch();
+            }
             highlightMatches();
             markCurrentMatch();
             break;
         // Go forward in search selection
         case 'ArrowRight':
             // Stop when last match is reached
-            if (index < numOfMatches) { index++; }
+            if (index < numOfMatches) { 
+                index++;
+                jumpToMatch();
+             }
             highlightMatches();
             markCurrentMatch();
             break;
         default:
             break;
     }
+}
+
+let jumpToMatch = () => {
+    // Get position elements
+    let box = TEXT.getBoundingClientRect();
+    let match = getCurrentMatch().getBoundingClientRect();
+    // Get position data
+    let currentPosition = TEXT.scrollTop;
+    let distanceToMatch = match.top - box.top;
+    let matchIsAboveTextBox = match.top < box.top;
+    let matchIsBelowTextBox = match.bottom > box.bottom;
+    // Set new scroll position
+    if (matchIsAboveTextBox) {
+        // Put match at top of textbox
+        TEXT.scrollTop = currentPosition + distanceToMatch;
+    } else if (matchIsBelowTextBox) {
+        // Put match at bottom of textbox
+        let distanceToBottom = (box.height - match.height);
+        TEXT.scrollTop = currentPosition + distanceToMatch - distanceToBottom;
+    }
+    syncTextAndHighlight();
 }
 
 /* Update text counts */
@@ -238,20 +266,33 @@ let getMatchCount = () => {
 * iii. HELPERS 
 */
 
+/* Get text from searchbar */
 let getSearch = () => {
     return SEARCH.value;
 }
 
+/* Get text from textbox */
 let getText = () => {
     return TEXT.value;
 }
 
+/* Get the mark element that is currently the selecected match */
+let getCurrentMatch = () => {
+    return HIGHLIGHT.querySelector('mark:nth-of-type(' + index + ')');
+}
+
+/* Update highlighting div from text in textbox  */
 let setHighlightText = text => {
     HIGHLIGHT.innerHTML = text;
 }
-
+/* Check if text is empty */
 let isEmpty = text => {
     return text === '';
+}
+
+/* Sync scrolling between textbox and highlighting div */
+let syncTextAndHighlight = () => {
+    HIGHLIGHT.scrollTop = TEXT.scrollTop;
 }
 
 /* * * * * * *
@@ -305,4 +346,33 @@ FILTER_BUTTON.onclick = function () {
 // Remove filtering function
 let remove = (userText, searchText) => {
     return returnString = userText.replaceAll(searchText, "");
+}
+
+/* Check if current match can be seen in textbox */
+let currentMatchIsInView = () => {
+    // Only run if match exists
+    if (getCurrentMatch()) {
+        // Position data for textbox and current match
+        let textBox = TEXT.getBoundingClientRect();
+        let currentMatch = getCurrentMatch().getBoundingClientRect();
+        // Check border conditions
+        let matchBottomIsInView = currentMatch.bottom > textBox.top;
+        let matchTopIsInView = currentMatch.top < textBox.bottom;
+        // Return true if match top or bottom is inside textbox
+        return matchBottomIsInView && matchTopIsInView;
+    }
+    return false;
+}
+
+/* Set textbox to green if match is in view, and red if not */
+let visualGuideIfMatchIsInView = () => {
+    if (currentMatchIsInView()) { 
+        TEXT.style.background = 'green'; 
+        TEXT.style.opacity = '0.2'; 
+        TEXT.style.zIndex = '5'; 
+    } else {
+        TEXT.style.background = 'red'; 
+        TEXT.style.opacity = '0.2';
+        TEXT.style.zIndex = '5';  
+    }    
 }
