@@ -31,6 +31,16 @@
  * 
  */
 
+
+/* Read current data */
+let readData = () => {
+    text = getText();
+    search = getSearch();
+    numOfMatches = getMatchCount();
+    words = getWords();
+}
+
+
 /* TEXT */
 const SEARCH = document.getElementById("filter-box"); // Same as FILTER_TEXT
 const TEXT = document.getElementById("input-v2-textbox");
@@ -43,16 +53,19 @@ const CHARS = document.getElementById("char-count");
 const SPACES = document.getElementById("char-count-with-space");
 const SENTENCES = document.getElementById("sentence-count");
 const MATCHES = document.getElementById("word-match");
+const MOST_COMMON_WORD = document.getElementById("most-common-word");
 
 /* BUTTONS */
 const REMOVE_RADIO = document.getElementById("remove");
 const FILTER_BUTTON = document.getElementById("filter-button");
+const CLEAR_BUTTON = document.getElementById("clear-button");
 
 /* DATA */
 let index = 1; // Start att first match
 let numOfMatches = 0;
 let search = '';
 let text = '';
+let words = [];
 
 /*
  *
@@ -67,6 +80,7 @@ TEXT.addEventListener('input', () => {
     highlightMatches();
     markCurrentMatch();
     updateCounts();
+    updateMostCommonWord();
 })
 
 /* Update text when user types into search bar */
@@ -76,6 +90,7 @@ SEARCH.addEventListener('input', () => {
     highlightMatches();
     markCurrentMatch();
     updateCounts();
+    updateMostCommonWord();
 })
 
 /* Sync highlight scrolling to text scrolling */
@@ -102,7 +117,8 @@ COPY.addEventListener("click", () => {
 
 //Clear button clears all counters and resets their value
 CLEAR_BUTTON.onclick = function () {
-    INPUT_BOX.innerHTML = "";
+    TEXT.value = "";
+
     WORD_COUNTER.value = 0;
     WORD_COUNTER.innerHTML = "Words: 0";
 
@@ -120,6 +136,7 @@ CLEAR_BUTTON.onclick = function () {
     
     MOST_COMMON_WORD.value = 0;
     MOST_COMMON_WORD.innerHTML = "Most common word: 0";
+    removeHighlighting();
 }
 
 /*
@@ -132,12 +149,6 @@ CLEAR_BUTTON.onclick = function () {
 * i. TEXT HANDLING
 */
 
-/* Read current data */
-let readData = () => {
-    text = getText();
-    search = getSearch();
-    numOfMatches = getMatchCount();
-}
 
 /* Highlight all matches */
 let highlightMatches = () => {
@@ -201,6 +212,7 @@ let updateCounts = () => {
     } else {
         MATCHES.innerHTML = 'Matches: ' + index + '/' + numOfMatches;
     }
+    MOST_COMMON_WORD.innerHTML = "Most common word: " + updateMostCommonWord()[0] + " " + updateMostCommonWord()[1];
 }
 
 /* Copy input text to clipboard */
@@ -307,9 +319,8 @@ let getWordIndices = (searchString) => {
 }
 
 // Splits text and returns array with each word
-let getWords = (text) => {
-    let words = text.split(/\s+/);
-    return words;
+let getWords = () => {
+    return text.split(/\s+/);
 }
 
 // When you click the Search button, have an if case for every radio button and based on that
@@ -327,4 +338,34 @@ FILTER_BUTTON.onclick = function () {
 // Remove filtering function
 let remove = (userText, searchText) => {
     return returnString = userText.replaceAll(searchText, "");
+}
+
+let updateMostCommonWord = () => {
+    if (isEmpty(text)){
+        return ['no text', '0'];
+    }
+
+    let hashMapAllWordsAndFrequency = new Map();
+    for(let i = 0; i < words.length; i++){
+        // If words already exists in hashMap, add +1 to its value.
+        if(hashMapAllWordsAndFrequency.has(words[i])){
+            hashMapAllWordsAndFrequency.set(words[i], hashMapAllWordsAndFrequency.get(words[i]) + 1);
+        } else { //else add it and give it value 1
+            hashMapAllWordsAndFrequency.set(words[i], 1);
+        }
+    }
+
+    let maxCount = 0;
+    let maxWord;
+
+    hashMapAllWordsAndFrequency.forEach((value, key) => {
+        if (maxCount < value){
+            maxWord = key;
+            maxCount = value;
+        }
+    });
+
+    returnArray = [maxWord, maxCount];
+
+    return returnArray;    
 }
