@@ -24,8 +24,8 @@
  *                                   *
  *                                   *
  * * * * * * * * * * * * * * * * * * */
- 
- * {
+
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -34,7 +34,9 @@
     flex-direction: column;
 }
 
-*[contenteditable="true"]{display: inline-block;}
+*[contenteditable="true"] {
+    display: inline-block;
+}
 
 /* Settings affecting the whole webpage */
 body {
@@ -47,7 +49,9 @@ body {
 }
 
 /* Add selector to hide element when working on different features */
-form, hr, #output {
+form,
+hr,
+#output {
     display: none;
 }
 
@@ -56,7 +60,7 @@ h1 {
 }
 
 #text-below-main-heading {
-    color: teal;   
+    color: teal;
 }
 
 /* Container class affects almost the whole document */
@@ -102,7 +106,7 @@ h1 {
     margin: 2em;
 }
 
-#input-v2-container > * {
+#input-v2-container>* {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-size: 1.4em;
@@ -113,7 +117,7 @@ h1 {
     margin: 0;
     inset: 0;
     position: absolute;
-}    
+}
 
 #input-v2-highlight {
     /* background: blue; */
@@ -121,6 +125,21 @@ h1 {
     white-space: pre-wrap;
     overflow-y: scroll;
     color: transparent;
+}
+
+/* Prevent double scrollbars (hide highlight div scrollbar) */
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#input-v2-highlight::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#input-v2-highlight {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 #input-v2-textbox {
@@ -204,4 +223,3 @@ button:hover {
     background-size: cover;
     color: white;
 }
-
