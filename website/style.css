@@ -168,11 +168,13 @@ mark {
 
 /*
 .wordsAndCharacters {
+    display: inline-flex;
     border: 3px;
     padding: 20px;
     margin: 20px;
 }
 */
+
 
 #buttons {
     flex-direction: row;

@@ -1,3 +1,8 @@
+
+
+// OLD CODE WITHOUT OBJECT ORIENTATION
+
+
 /*
  *
  * RGX / Text Analyzer is an online text editing and filtering tool,
@@ -6,6 +11,7 @@
  * This file handles the functionality of the application.
  *
  */
+
 
 /* * * * * * * * * * * * * * * * * * *
  *                                   *
@@ -33,6 +39,7 @@
 
 
 /* Read current data */
+
 let readData = () => {
     text = getText();
     search = getSearch();
@@ -40,7 +47,7 @@ let readData = () => {
     words = getWords();
 }
 
-
+                    
 /* TEXT */
 const SEARCH = document.getElementById("filter-box"); // Same as FILTER_TEXT
 const TEXT = document.getElementById("input-v2-textbox");
@@ -80,7 +87,7 @@ TEXT.addEventListener('input', () => {
     highlightMatches();
     markCurrentMatch();
     updateCounts();
-    updateMostCommonWord();
+    getMostFrequentWords();
 })
 
 /* Update text when user types into search bar */
@@ -90,7 +97,6 @@ SEARCH.addEventListener('input', () => {
     highlightMatches();
     markCurrentMatch();
     updateCounts();
-    updateMostCommonWord();
 })
 
 /* Sync highlight scrolling to text scrolling */
@@ -212,7 +218,10 @@ let updateCounts = () => {
     } else {
         MATCHES.innerHTML = 'Matches: ' + index + '/' + numOfMatches;
     }
-    MOST_COMMON_WORD.innerHTML = "Most common word: " + updateMostCommonWord()[0] + " " + updateMostCommonWord()[1];
+    MOST_COMMON_WORD.innerHTML = "Most common word: " + getMostFrequentWords();
+    
+    //getMostCommonWords()[1] + getMostCommonWords()[2]
+    //+ getMostCommonWords()[3] + getMostCommonWords()[4];
 }
 
 /* Copy input text to clipboard */
@@ -340,11 +349,11 @@ let remove = (userText, searchText) => {
     return returnString = userText.replaceAll(searchText, "");
 }
 
+/*
 let updateMostCommonWord = () => {
     if (isEmpty(text)){
-        return ['no text', '0'];
+        return ['no text', ''];
     }
-
     let hashMapAllWordsAndFrequency = new Map();
     for(let i = 0; i < words.length; i++){
         // If words already exists in hashMap, add +1 to its value.
@@ -354,18 +363,61 @@ let updateMostCommonWord = () => {
             hashMapAllWordsAndFrequency.set(words[i], 1);
         }
     }
-
     let maxCount = 0;
     let maxWord;
-
     hashMapAllWordsAndFrequency.forEach((value, key) => {
         if (maxCount < value){
             maxWord = key;
             maxCount = value;
         }
     });
-
     returnArray = [maxWord, maxCount];
-
     return returnArray;    
 }
+*/
+
+/* Get k most frequent words */
+let getMostFrequentWords = () => {
+    if (isEmpty(text)){
+        return ['no text', ''];
+    }
+    
+    words = getWords();
+    k=5;
+    let map = new Map();
+    words.forEach(word => {
+        if(map.has(word)) {
+            map.set(word, map.get(word) + 1);
+        }
+        else {
+            map.set(word, 1);
+        }
+    });
+
+    return [...map].sort((x, y) => {
+        const f1 = x[1], f2 = y[1]
+        if (f1 < f2) return 1;
+        if (f1 > f2) return -1;
+        return x[0].localeCompare(y[0]);
+    }).map(x => x[0]).slice(0, k);
+};
+
+/*
+let getMostCommonWords = () => {
+    let mostCommonWords = mostFrequentWords();
+    returnArray = {};
+    for (let i = 0; i < mostCommonWords.length; i++) { 
+        if (mostCommonWords[i] === undefined){
+            returnArray[i] = '';
+        } else {
+            returnArray[i] = mostCommonWords[i];
+        }
+    }
+    return returnArray;
+}
+*/
+
+
+
+
+
