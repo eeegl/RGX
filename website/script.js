@@ -121,6 +121,17 @@ COPY.addEventListener("click", () => {
     copyToClipboard();
 })
 
+let radioBtns = document.querySelectorAll("input[name='filter']");
+
+let findSelected = () => {
+    let selected = document.querySelector("input[name='filter']:checked").value;
+    console.log(selected);
+}
+
+radioBtns.forEach(radioBtn => {
+    radioBtn.addEventListener("change", findSelected);
+});
+
 //Clear button clears all counters and resets their value
 CLEAR_BUTTON.onclick = function () {
     TEXT.value = "";
