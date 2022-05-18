@@ -64,7 +64,8 @@ const MOST_COMMON_WORD = document.getElementById("most-common-word");
 
 /* BUTTONS */
 const REMOVE_RADIO = document.getElementById("remove");
-const FILTER_BUTTON = document.getElementById("filter-button");
+const REMOVE = document.getElementById("remove-one-button");
+const REMOVE_ALL = document.getElementById("remove-all-button");
 const CLEAR_BUTTON = document.getElementById("clear-button");
 
 /* DATA */
@@ -145,17 +146,14 @@ CLEAR_BUTTON.onclick = function () {
     removeHighlighting();
 }
 
-/* Remove currently selected match */
-FILTER_BUTTON.addEventListener('click', () => {
+/* Remove all matches from text */
+REMOVE_ALL.addEventListener('click', () => {
+    removeAllMatches();
     readData();
-    removeMatch();
-    updateCounts();
     setHighlightText(text);
     highlightMatches();
     markCurrentMatch();
     updateCounts();
-    getMostFrequentWords();
-
 })
 
 /*
@@ -271,9 +269,8 @@ let copyToClipboard = () => {
 }
 
 /* Remove currently selected match */
-let removeMatch = () => {
-    let search = getSearch();
-    if (isEmpty(search)) { return; }
+let removeAllMatches = () => {
+    if (isEmpty(search)) { console.log("EMPTY"); return; }
     let newText = text.replaceAll(search, '');
     TEXT.value = newText;
 }
