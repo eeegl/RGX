@@ -49,7 +49,7 @@ let readData = () => {
 
                     
 /* TEXT */
-const SEARCH = document.getElementById("filter-box"); // Same as FILTER_TEXT
+const SEARCH = document.getElementById("search-bar"); // Same as FILTER_TEXT
 const TEXT = document.getElementById("input-v2-textbox");
 const HIGHLIGHT = document.getElementById("input-v2-highlight");
 const COPY = document.getElementById("copy-button"); // Same as COPY_BUTTON
@@ -399,17 +399,6 @@ let getWords = () => {
     return text.split(/\s+/);
 }
 
-// When you click the Search button, have an if case for every radio button and based on that
-// call a filtering function
-FILTER_BUTTON.onclick = function () {
-    var contenteditable = document.querySelector('[contenteditable]'),
-        text = contenteditable.textContent;
-    let returnString;
-    if (REMOVE_RADIO.checked) {
-        returnString = remove(text, SEARCH.value);
-    }
-    OUTPUT_BOX.innerHTML = returnString;
-}
 
 // Remove filtering function
 let remove = (userText, searchText) => {

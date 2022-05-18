@@ -30,7 +30,7 @@
     margin: 0;
     box-sizing: border-box;
     /* display: flex; */
-    display: block;
+    display: flex;
     flex-direction: column;
 }
 
@@ -49,7 +49,6 @@ body {
 }
 
 /* Add selector to hide element when working on different features */
-form,
 hr,
 #output {
     display: none;
@@ -61,6 +60,30 @@ h1 {
 
 #text-below-main-heading {
     color: teal;
+}
+
+.btns form {
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+}
+
+#filter button {
+    background-color: yellowgreen;
+}
+
+.remove {
+    display: flex;
+    flex-direction: row;
+}
+
+.replace {
+    display: flex;
+    flex-direction: row;
+}
+
+.search-and-remove-bars {
+    width: 300px;
 }
 
 /* Container class affects almost the whole document */
@@ -194,13 +217,10 @@ mark {
 }
 */
 
-
-#buttons {
-    flex-direction: row;
-}
-
-.fbutton {
-    margin: 10px;
+.button {
+    width: fit-content;
+    padding: 10px;
+    display: inline;
 }
 
 /* Reference to link. Notice that it looks through the whole href-string for "wiki" */
