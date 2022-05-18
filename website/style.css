@@ -68,7 +68,14 @@ h1 {
     flex-direction: row;
 }
 
+#filter button {
+    background-color: yellowgreen;
+}
 
+.remove {
+    display: flex;
+    flex-direction: row;
+}
 
 /* Container class affects almost the whole document */
 .container {
@@ -201,13 +208,10 @@ mark {
 }
 */
 
-
-#buttons {
-    flex-direction: row;
-}
-
-.fbutton {
-    margin: 10px;
+.button {
+    width: fit-content;
+    padding: 10px;
+    display: inline;
 }
 
 /* Reference to link. Notice that it looks through the whole href-string for "wiki" */

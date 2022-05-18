@@ -373,17 +373,6 @@ let getWords = () => {
     return text.split(/\s+/);
 }
 
-// When you click the Search button, have an if case for every radio button and based on that
-// call a filtering function
-FILTER_BUTTON.onclick = function () {
-    var contenteditable = document.querySelector('[contenteditable]'),
-        text = contenteditable.textContent;
-    let returnString;
-    if (REMOVE_RADIO.checked) {
-        returnString = remove(text, SEARCH.value);
-    }
-    OUTPUT_BOX.innerHTML = returnString;
-}
 
 // Remove filtering function
 let remove = (userText, searchText) => {
