@@ -145,6 +145,19 @@ CLEAR_BUTTON.onclick = function () {
     removeHighlighting();
 }
 
+/* Remove currently selected match */
+FILTER_BUTTON.addEventListener('click', () => {
+    readData();
+    removeMatch();
+    updateCounts();
+    setHighlightText(text);
+    highlightMatches();
+    markCurrentMatch();
+    updateCounts();
+    getMostFrequentWords();
+
+})
+
 /*
  *
  * III. FUNCTIONS
@@ -257,6 +270,14 @@ let copyToClipboard = () => {
     navigator.clipboard.writeText(text);
 }
 
+/* Remove currently selected match */
+let removeMatch = () => {
+    let search = getSearch();
+    if (isEmpty(search)) { return; }
+    let newText = text.replaceAll(search, '');
+    TEXT.value = newText;
+}
+
 /*
 * ii. COUNTING
 */
@@ -319,12 +340,17 @@ let getText = () => {
     return TEXT.value;
 }
 
-/* Get the mark element that is currently the selecected match */
+/* Get the mark element that is currently the selected match */
 let getCurrentMatch = () => {
     return HIGHLIGHT.querySelector('mark:nth-of-type(' + index + ')');
 }
 
-/* Update highlighting div from text in textbox  */
+/* Update text in textarea */
+let setText = text => {
+    TEXT.innerHTML = text;
+}
+
+/* Update highlighting div from text in textbox */
 let setHighlightText = text => {
     HIGHLIGHT.innerHTML = text;
 }
