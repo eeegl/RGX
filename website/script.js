@@ -72,6 +72,8 @@ const REMOVE_BTN = document.getElementById("remove-one-button");
 const REMOVE_ALL_BTN = document.getElementById("remove-all-button");
 const REPLACE_BTN = document.getElementById("replace-one-button");
 const REPLACE_ALL_BTN = document.getElementById("replace-all-button");
+const NEXT_BTN = document.getElementById("next-button");
+const BACK_BTN = document.getElementById("back-button");
 const CLEAR_BUTTON = document.getElementById("clear-button");
 
 /* DATA */
@@ -211,6 +213,27 @@ REPLACE_ALL_BTN.addEventListener('click', () => {
     updateCounts();
 })
 
+BACK_BTN.addEventListener('click', () => {
+    // Stop when first match is reached
+    if (index > 1) { 
+        index--;
+        jumpToMatch();
+    }
+    highlightMatches();
+    markCurrentMatch();
+})
+
+NEXT_BTN.addEventListener('click', () => {
+    // Stop when last match is reached
+    if (index < numOfMatches) { 
+        index++;
+        jumpToMatch();
+     }
+    highlightMatches();
+    markCurrentMatch();
+})
+
+
 /*
  *
  * III. FUNCTIONS
@@ -346,12 +369,13 @@ let removeAllMatches = () => {
 /* Remove currently selected match in text */
 let replaceCurrentMatch = () => {
     let search = getSearch();
+    let replacement = getReplacement()
     let textHTML = getTextHTML();
     let currentMatchHTML = getCurrentMatch().outerHTML;
     // Do nothing if search is empty
     if (isEmpty(search)) { return; }
     // Remove current match from text
-    let removedMatchHTML = textHTML.replace(currentMatchHTML, '');
+    let removedMatchHTML = textHTML.replace(currentMatchHTML, replacement);
     // Strip HTML formatting and add to textbox
     let plainText = removedMatchHTML.replace(/<\/?mark>/g, '');
     setText(plainText);
@@ -360,7 +384,7 @@ let replaceCurrentMatch = () => {
 /* Remove all matches in text */
 let replaceAllMatches = () => {
     let search = getSearch();
-    let replace = getReplace();
+    let replace = getReplacement();
     // Do nothing if search is empty
     if (isEmpty(search)) { return; }
     // Replace every search match
@@ -426,7 +450,7 @@ let getSearch = () => {
 }
 
 /* Get text from replace bar */
-let getReplace = () => {
+let getReplacement = () => {
     return REPLACE_BAR.value;
 }
 
