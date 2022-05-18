@@ -223,13 +223,19 @@ mark {
 }
 
 
-wordsAndCharacters {
+.wordsAndCharacters {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.wordsAndCharacters p {
+    
+    background-color: red;
     display: inline-flex;
     height: 150px;
-    width: 150px;
-    border: 3px;
-    padding: 20px;
-    margin: 20px;
+    width: 100%;
+    border: 5px solid #000000;
 }
 
 
