@@ -49,7 +49,6 @@ body {
 }
 
 /* Add selector to hide element when working on different features */
-form,
 hr,
 #output {
     display: none;
@@ -63,9 +62,8 @@ h1 {
     color: teal;
 }
 
-.btns {
+.btns form {
     background-color: red;
-    
     display: flex;
     flex-direction: row;
 }
