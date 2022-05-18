@@ -78,9 +78,13 @@ h1 {
 }
 
 .replace {
-    display: none;
+    display: none;    
+}
+.replace-buttons {
+    display: flex;
     flex-direction: row;
 }
+
 
 #replace-section {
     background:yellow;
@@ -93,6 +97,7 @@ h1 {
 /* Container class affects almost the whole document */
 .container {
     font-size: 12px;
+    background-color: yellow;
 }
 
 /* box-1 is the main header section */
