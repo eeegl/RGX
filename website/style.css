@@ -78,8 +78,12 @@ h1 {
 }
 
 .replace {
-    display: flex;
+    display: none;
     flex-direction: row;
+}
+
+#replace-section {
+    background:yellow;
 }
 
 .search-and-remove-bars {

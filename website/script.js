@@ -126,6 +126,13 @@ let radioBtns = document.querySelectorAll("input[name='filter']");
 let findSelected = () => {
     let selected = document.querySelector("input[name='filter']:checked").value;
     console.log(selected);
+    if (selected === 'remove') {
+        document.getElementById("remove-section").style.display = "flex";
+        document.getElementById("replace-section").style.display = "none";
+    } else if (selected === 'replace') {
+        document.getElementById("replace-section").style.display = "flex";
+        document.getElementById("remove-section").style.display = "none";
+    }
 }
 
 radioBtns.forEach(radioBtn => {
