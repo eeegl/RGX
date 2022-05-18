@@ -45,11 +45,15 @@ let readData = () => {
     search = getSearch();
     numOfMatches = getMatchCount();
     words = getWords();
+    if (index > numOfMatches && numOfMatches > 0) {
+        index = 1;
+    }
 }
 
                     
 /* TEXT */
-const SEARCH = document.getElementById("search-bar"); // Same as FILTER_TEXT
+const SEARCH_BAR = document.getElementById("search-bar"); // Same as FILTER_TEXT
+const REPLACE_BAR = document.getElementById("replace-textarea");
 const TEXT = document.getElementById("input-v2-textbox");
 const HIGHLIGHT = document.getElementById("input-v2-highlight");
 const COPY = document.getElementById("copy-button"); // Same as COPY_BUTTON
@@ -64,8 +68,10 @@ const MOST_COMMON_WORD = document.getElementById("most-common-word");
 
 /* BUTTONS */
 const REMOVE_RADIO = document.getElementById("remove");
-const REMOVE = document.getElementById("remove-one-button");
-const REMOVE_ALL = document.getElementById("remove-all-button");
+const REMOVE_BTN = document.getElementById("remove-one-button");
+const REMOVE_ALL_BTN = document.getElementById("remove-all-button");
+const REPLACE_BTN = document.getElementById("replace-one-button");
+const REPLACE_ALL_BTN = document.getElementById("replace-all-button");
 const CLEAR_BUTTON = document.getElementById("clear-button");
 
 /* DATA */
@@ -92,7 +98,7 @@ TEXT.addEventListener('input', () => {
 })
 
 /* Update text when user types into search bar */
-SEARCH.addEventListener('input', () => {
+SEARCH_BAR.addEventListener('input', () => {
     readData();
     setHighlightText(text);
     highlightMatches();
@@ -146,9 +152,40 @@ CLEAR_BUTTON.onclick = function () {
     removeHighlighting();
 }
 
-/* Remove all matches from text */
-REMOVE_ALL.addEventListener('click', () => {
+/* Remove current match from text */
+REMOVE_BTN.addEventListener('click', () => {
+    removeCurrentMatch();
+    readData();
+    setHighlightText(text);
+    highlightMatches();
+    markCurrentMatch();
+    updateCounts();
+    jumpToMatch();
+})
+
+/* Remove all matches in text */
+REMOVE_ALL_BTN.addEventListener('click', () => {
     removeAllMatches();
+    readData();
+    setHighlightText(text);
+    highlightMatches();
+    markCurrentMatch();
+    updateCounts();
+})
+
+/* Replace current match in text */
+REPLACE_BTN.addEventListener('click', () => {
+    replaceCurrentMatch();
+    readData();
+    setHighlightText(text);
+    highlightMatches();
+    markCurrentMatch();
+    updateCounts();
+})
+
+/* Replace all matches in text */
+REPLACE_ALL_BTN.addEventListener('click', () => {
+    replaceAllMatches();
     readData();
     setHighlightText(text);
     highlightMatches();
@@ -258,7 +295,6 @@ let updateCounts = () => {
         MATCHES.innerHTML = 'Matches: ' + index + '/' + numOfMatches;
     }
     MOST_COMMON_WORD.innerHTML = "Most common word: " + getMostFrequentWords();
-    
     //getMostCommonWords()[1] + getMostCommonWords()[2]
     //+ getMostCommonWords()[3] + getMostCommonWords()[4];
 }
@@ -268,11 +304,50 @@ let copyToClipboard = () => {
     navigator.clipboard.writeText(text);
 }
 
-/* Remove currently selected match */
+/* Remove currently selected match in text */
+let removeCurrentMatch = () => {
+    let search = getSearch();
+    let textHTML = getTextHTML();
+    let currentMatchHTML = getCurrentMatch().outerHTML;
+    // Do nothing if search is empty
+    if (isEmpty(search)) { return; }
+    // Remove current match from text
+    let removedMatchHTML = textHTML.replace(currentMatchHTML, '');
+    // Strip HTML formatting and add to textbox
+    let plainText = removedMatchHTML.replace(/<\/?mark>/g, '');
+    setText(plainText);
+}
+
+/* Remove all matches in text */
 let removeAllMatches = () => {
-    if (isEmpty(search)) { console.log("EMPTY"); return; }
+    if (isEmpty(search)) { return; }
     let newText = text.replaceAll(search, '');
     TEXT.value = newText;
+}
+
+/* Remove currently selected match in text */
+let replaceCurrentMatch = () => {
+    let search = getSearch();
+    let textHTML = getTextHTML();
+    let currentMatchHTML = getCurrentMatch().outerHTML;
+    // Do nothing if search is empty
+    if (isEmpty(search)) { return; }
+    // Remove current match from text
+    let removedMatchHTML = textHTML.replace(currentMatchHTML, '');
+    // Strip HTML formatting and add to textbox
+    let plainText = removedMatchHTML.replace(/<\/?mark>/g, '');
+    setText(plainText);
+}
+
+/* Remove all matches in text */
+let replaceAllMatches = () => {
+    let search = getSearch();
+    let replace = getReplace();
+    // Do nothing if search is empty
+    if (isEmpty(search)) { return; }
+    // Replace every search match
+    let replacedText = getText().replaceAll(search, replace);
+    setText(replacedText);
 }
 
 /*
@@ -329,12 +404,26 @@ let getMatchCount = () => {
 
 /* Get text from searchbar */
 let getSearch = () => {
-    return SEARCH.value;
+    return SEARCH_BAR.value;
+}
+
+/* Get text from replace bar */
+let getReplace = () => {
+    return REPLACE_BAR.value;
 }
 
 /* Get text from textbox */
 let getText = () => {
     return TEXT.value;
+}
+
+/* Get text in HTML format (including highlighting tags) */
+let getTextHTML = () => {
+    return HIGHLIGHT.innerHTML;
+}
+
+let getIndex = () => {
+    return index;
 }
 
 /* Get the mark element that is currently the selected match */
@@ -344,7 +433,7 @@ let getCurrentMatch = () => {
 
 /* Update text in textarea */
 let setText = text => {
-    TEXT.innerHTML = text;
+    TEXT.value = text;
 }
 
 /* Update highlighting div from text in textbox */
