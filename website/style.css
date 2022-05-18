@@ -85,6 +85,11 @@ h1 {
     flex-direction: row;
 }
 
+.next-or-before-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
 
 #replace-section {
     background:yellow;
@@ -135,7 +140,7 @@ h1 {
     inset: 0;
     background: white;
     box-sizing: border-box;
-    margin: 2em;
+    
 }
 
 #input-v2-container>* {
@@ -217,14 +222,16 @@ mark {
     font-size: 13;
 }
 
-/*
-.wordsAndCharacters {
+
+wordsAndCharacters {
     display: inline-flex;
+    height: 150px;
+    width: 150px;
     border: 3px;
     padding: 20px;
     margin: 20px;
 }
-*/
+
 
 .button {
     width: fit-content;
