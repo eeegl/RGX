@@ -34,42 +34,25 @@
     flex-direction: column;
 }
 
-*[contenteditable="true"] {
-    display: inline-block;
-}
-
 /* Settings affecting the whole webpage */
 body {
     background-color: aliceblue;
     color: #555555;
-
     font-family: "Lucida Console", Monaco, monospace;
     margin: auto;
     width: 90%;
 }
 
-/* Add selector to hide element when working on different features */
-hr,
-#output {
-    display: none;
-}
-
-h1 {
-    color: maroon
-}
-
-#text-below-main-heading {
-    color: teal;
-}
-
 .btns form {
-    background-color: red;
     display: flex;
     flex-direction: row;
+    justify-content: left;
 }
 
-#filter button {
-    background-color: yellowgreen;
+form > input {
+    width: 100px;
+    height: 100px;
+    background: green;
 }
 
 .remove {
@@ -80,6 +63,7 @@ h1 {
 .replace {
     display: none;    
 }
+
 .replace-buttons {
     display: flex;
     flex-direction: row;
@@ -90,13 +74,15 @@ h1 {
     flex-direction: row;
 }
 
-
 #replace-section {
     background:yellow;
 }
 
 .search-and-remove-bars {
-    width: 300px;
+    width: 30em;
+    padding: 1em;
+    resize: none;
+    margin: 0.5em 0;
 }
 
 /* Container class affects almost the whole document */
@@ -237,7 +223,6 @@ mark {
     width: 100%;
     border: 5px solid #000000;
 }
-
 
 .button {
     width: fit-content;

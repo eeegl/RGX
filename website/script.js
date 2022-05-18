@@ -221,6 +221,7 @@ BACK_BTN.addEventListener('click', () => {
     }
     highlightMatches();
     markCurrentMatch();
+    updateCounts();
 })
 
 NEXT_BTN.addEventListener('click', () => {
@@ -231,6 +232,7 @@ NEXT_BTN.addEventListener('click', () => {
      }
     highlightMatches();
     markCurrentMatch();
+    updateCounts();
 })
 
 

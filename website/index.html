@@ -20,43 +20,49 @@
             </p>
         </div>
 
-        <hr>
-
         <div class = "main-content">
             <!-- Filtering Section  -->
             <div class="section" id="filter">
+
+                <!-- Functionality selection -->
                 <div class="btns">
                     <form name="form">
+                        <!-- Remove -->
                         <input type="radio" id="remove" name='filter' value="remove" checked>
                         <label for="Remove">Remove</label><br>
+                        <!-- Replace -->
                         <input type="radio" id="replace" name='filter' value="replace">
                         <label for="Replace">Replace</label><br>
                     </form>
                 </div>
 
+                <!-- Search bar -->
                 <textarea name="" class="search-and-remove-bars" id="search-bar" cols="30" rows="1" placeholder="Enter word..."></textarea>
 
+                <!-- Remove section -->
                 <div class="remove" id="remove-section">
                     <button type="button" id="remove-one-button" class="button">Remove</button>
                     <button type="button" id="remove-all-button" class="button">Remove All</button>
                 </div>
 
+                <!-- Replace section -->
                 <div class="replace" id="replace-section">
+                    <!-- Bar -->
                     <textarea name="" class="search-and-remove-bars" id="replace-textarea" cols="30" rows="1" placeholder="Enter word to replace..."></textarea>
+                    <!-- Buttons -->
                     <div class="replace-buttons">
                         <button type="button" id="replace-one-button" class="button">Replace</button>
                         <button type="button" id="replace-all-button" class="button">Replace All</button>
                     </div>
                 </div>
 
+                <!-- Back / next buttons-->
                 <div class="next-or-before-buttons">
                     <button type="button" id="back-button" class="button">Back</button>
                     <button type="button" id="next-button" class="button">Next</button>
                 </div>
 
             </div>
-
-            <hr>
 
             <!-- Input section -->
             <div id="input-box" contenteditable="true"></div>
@@ -66,10 +72,7 @@
                 <div id="input-v2-highlight"></div>    
             </div>
 
-            <!-- Clear button -->
-    
-            <hr>
-
+            <!-- Counters -->
             <div class="wordsAndCharacters" id="input">
                 <p id="word-count">Words: 0</p>
                 <p id="char-count">Characters: 0</p>
@@ -79,14 +82,13 @@
                 <p id="most-common-word">Most common word: no text</p>
             </div>
 
+            <!-- Copy and clear -->
             <div>
                 <button type="button" id="clear-button" class="button">Clear</button>
                 <button class="button" id="copy-button">Copy to clipboard</button>
             </div>
 
         </div>
-
-        <hr>
 
         <!-- Copyright Footer -->
         <div id="footer">
