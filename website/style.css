@@ -76,6 +76,9 @@ h1 {
     display: flex;
     flex-direction: row;
 }
+.search-and-remove-bars {
+    width: 300px;
+}
 
 /* Container class affects almost the whole document */
 .container {

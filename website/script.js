@@ -49,7 +49,7 @@ let readData = () => {
 
                     
 /* TEXT */
-const SEARCH = document.getElementById("filter-box"); // Same as FILTER_TEXT
+const SEARCH = document.getElementById("search-bar"); // Same as FILTER_TEXT
 const TEXT = document.getElementById("input-v2-textbox");
 const HIGHLIGHT = document.getElementById("input-v2-highlight");
 const COPY = document.getElementById("copy-button"); // Same as COPY_BUTTON
