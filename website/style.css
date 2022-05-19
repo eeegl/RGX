@@ -45,6 +45,7 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    
 }
 
 /* Change to flex row layout */
@@ -295,20 +296,38 @@ mark {
     width: 100%;
     justify-content: space-evenly;
     text-align: center;
-    border-right: 1px solid red;
 }
 
 #counters > div:last-of-type {
     border-right: none;
+    
+}
+
+#counters{
+    overflow: hidden;
+    word-break: break-all;
+}
+
+
+#most-common-word{
+    overflow: scroll;
+
+    -ms-word-break: break-all;
+    word-break: break-all;
+
+    /* Non standard for WebKit */
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+    height: 2rem;
 }
 
 #counters div div {
     padding: 1em;
     white-space: nowrap;
-}
-
-#counters {
-    justify-content: center;
+    /* order: 1; */
 }
 
 button {

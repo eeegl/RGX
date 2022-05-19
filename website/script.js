@@ -158,7 +158,7 @@ CLEAR_BUTTON.onclick = function () {
     CHAR_SPACE_COUNTER.innerHTML = "0";
     WORD_MATCH.innerHTML = "0/0";
     SENTENCE_COUNT.innerHTML = "0";
-    MOST_COMMON_WORD.innerHTML = "0";
+    MOST_COMMON_WORD.innerHTML = "-";
     removeHighlighting();
 }
 
