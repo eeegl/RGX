@@ -139,7 +139,6 @@ let findSelected = () => {
         document.getElementById("remove-section").style.display = "flex";
         document.getElementById("replace-section").style.display = "none";
         document.getElementById("replace-textarea").style.display = "none";
-
     } else if (selected === 'replace') {
         document.getElementById("replace-section").style.display = "flex";
         document.getElementById("replace-textarea").style.display = "flex";
