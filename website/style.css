@@ -75,51 +75,17 @@ body, textarea, button {
     --color-background: #F5F3E5;
     --color-boxes: #F8F8F7;
     --color-buttons: #776F6D;
-    --color-text: #776F6D;
+    --color-text: black;
     --color-highlight: #FFEB00;
     --color-selected: lightsalmon;
 }
-.btns {max-width: 850px; width: 100%; margin: 0 auto;}
-.four { width: 32.26%; max-width: 32.26%;}
 
-.form .plan input{
-	display: none;
+/* Dimensions */
+:root {
+    --btn-height: 3rem;
+    --btn-width: 8.5rem;
 }
 
-.form label{
-	position: relative;
-	color: #fff;
-	background-color: #aaa;
-	font-size: 26px;
-	text-align: center;
-	height: 150px;
-	line-height: 150px;
-	display: block;
-	cursor: pointer;
-	border: 3px solid transparent;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-.form input:checked + label{
-	border: 3px solid #333;
-	background-color: #2fcc71;
-}
-
-.form input:checked + label:after{
-	content: "\2713";
-	width: 40px;
-	height: 40px;
-	line-height: 40px;
-	border-radius: 100%;
-	border: 2px solid #333;
-	background-color: #2fcc71;
-	z-index: 999;
-	position: absolute;
-	top: -10px;
-	right: -10px;
-}
 
  /* 
   * 
@@ -128,11 +94,42 @@ body, textarea, button {
   */
 
 
+/* Functionality selection buttons */
+
+html .btns, section {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    flex-direction: row;
+}
+
+.form .plan input {
+    display: none;
+}
+
+.form label {
+    text-align: center;
+	line-height: var(--btn-height);
+	cursor: pointer;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+    padding: 1rem;
+	/* position: relative; */
+	/* display: block; */
+}
+
+.form input:checked + label {
+	background-color: var(--color-buttons);
+}
+
+/* .btns {max-width: 850px; width: 100%; margin: 0 auto;}
+.four { width: 32.26%; max-width: 32.26%;} */
+
 /* Basic input box styling */
 textarea {
     width: 30em;
     padding: 1em;
-    margin: 0.5em 0;
     resize: none;
 }
 
@@ -142,21 +139,50 @@ textarea, #input-v2-container {
 }
 
 /* Styling for filter and edit section */
+
 #filter {
-    height: 20em;
-    background: rebeccapurple;
+    width: 100%;
+    justify-content: left;
+}
+
+#filter button, label {
+    width: var(--btn-width);
+    padding: 1rem;
+    text-transform: uppercase;
+    color: var(--color-background);
+    /* font-weight: bold; */
+    background: var(--color-buttons);
+    cursor: pointer;
+}
+
+.btns label:hover,
+#filter button:hover {
+    background: green;
+}
+
+#bars, #edit, #copy-clear {
+    align-content: stretch;
 }
 
 #bars {
-    background: mediumaquamarine;
+    width: 100%;
+}
+
+#bars textarea {
+    width: 100%;
+}
+
+#filter textarea,
+#filter button {
+    box-sizing: border-box;
+    height: var(--btn-height);
+    border: solid 1px var(--color-background);
 }
 
 #edit {
-    background: sandybrown;
 }
 
 #copy-clear {
-    background: powderblue;
 }
 
 .btns form {
@@ -169,7 +195,7 @@ textarea, #input-v2-container {
 
 /* Container class affects almost the whole document */
 .container {
-    background-color: yellow;
+    /* background-color: yellow; */
 }
 
 /* box-1 is the main header section */
@@ -211,7 +237,6 @@ textarea, #input-v2-container {
 
 #input-v2-container > * {
     font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
     padding: 1em;
     width: 100%;
     height: 100%;
