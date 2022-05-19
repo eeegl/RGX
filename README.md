@@ -8,7 +8,7 @@
 
 ## <a name="description"></a> Description 
 
-RGX is an online text filtering tool that enables you to quickly filter and
+Text Analyzer is an online text filtering tool that enables you to quickly filter and
 edit text documents through an easy-to-understand user interface. This is done by
 implementing different Regular Expression search functions under the hood, that
 are accessed by simply typing in your search query in a text box and choosing
@@ -18,20 +18,27 @@ the different filters you want to apply.
 
 The web page can be broken into three parts:
 
-1. Input - the first textbox, where you enter the text you want to edit.
-2. Filter - the middle of the page, where you apply the different filters.
-3. Output - the second textbox, where the edited text is displayed.
+1. Filter - the top of the page, where you chose if you want to remove or replace text. The user can chose to apply the filters on one word at a time or the whole text.
+2. Text box - the middle of the page, where you type the text you want analyzed.
+3. Counters - the bottom of the page, where the user can get quantitative information about the text.
 
 ## <a name="list_of_functions"></a> List of functions
+### Filter Functions
+* Highlight search string.
+* Remove one or all search results.
+* Replace all or one search string occurances with input string.
 
-* Count number of words
-* Count number of characters
-* Syntax highlighting
-* Count number of occurrences of X
-* Find first N occurrences of X
-* Find last N occurrences of X
-* Find all line numbers with X 
-* Remove all search results
+### Counter Functions
+* Count the number of words.
+* Count the number of characters.
+* Count the number of matches of searched user input string.
+* Count the number of sentences.
+* Give the k most common words.
+
+### Other functionalities
 * Copy result to clipboard
+* Clear the text area
+
+
 
 © mathiasgrin & eeegl
