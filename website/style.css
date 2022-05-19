@@ -271,7 +271,6 @@ mark {
     width: 100%;
     justify-content: space-evenly;
     text-align: center;
-    border-right: 1px solid red;
 }
 
 #counters > div:last-of-type {
@@ -282,19 +281,11 @@ mark {
 #counters{
     overflow: hidden;
     word-break: break-all;
-    background-color: purple;
-    
-    
 }
 
-#most-common-word-box{
-    overflow: hidden;
-    background-color: green;
-}
 
 #most-common-word{
     overflow: scroll;
-    background-color: white;
 
     -ms-word-break: break-all;
     word-break: break-all;
@@ -306,13 +297,9 @@ mark {
     -moz-hyphens: auto;
     hyphens: auto;
     height: 2rem;
-    
-    
-
 }
 
 #counters div div {
-    background-color: blue;
     padding: 1em;
     white-space: nowrap;
     /* order: 1; */
