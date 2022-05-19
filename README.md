@@ -24,16 +24,16 @@ The web page can be broken into three parts:
 
 ## <a name="list_of_functions"></a> List of functions
 ### Filter Functions
-* Highlight search string.
-* Remove one or all search results.
-* Replace all or one search string occurances with input string.
+* Highlight the given search string in the input.
+* Remove one or all search results from the text.
+* Replace all or one search string occurance with an input string provided by the user.
 
 ### Counter Functions
 * Count the number of words.
 * Count the number of characters.
 * Count the number of matches of searched user input string.
 * Count the number of sentences.
-* Give the k most common words.
+* Display the most common words.
 
 ### Other functionalities
 * Copy result to clipboard
