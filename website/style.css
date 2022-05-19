@@ -48,6 +48,17 @@
     
 }
 
+button, label, textarea, #input-v2-container{
+    border-radius: 3px;
+}
+
+button:active {
+    background-color: orange;
+    box-shadow: 0 5px gray;
+    transform: translateY(2px);
+ }
+
+
 /* Change to flex row layout */
 #filter,
 #counters,
@@ -73,12 +84,13 @@ body, textarea, button {
 
 /* Colors */
 :root {
-    --color-background: #F5F3E5;
-    --color-boxes: #F8F8F7;
+    --color-background: #0D1F2D;
+    --color-boxes: #F5F3E5;
     --color-buttons: #776F6D;
-    --color-text: black;
+    --color-text: F5F3E5;
     --color-highlight: #FFEB00;
     --color-selected: lightsalmon;
+    --color-textbox-text: black;
 }
 
 /* Dimensions */
@@ -136,7 +148,7 @@ textarea {
 
 textarea, #input-v2-container {
     background: var(--color-boxes);
-    color: var(--color-text);
+    color: var(--color-textbox-text);
 }
 
 /* Styling for filter and edit section */
