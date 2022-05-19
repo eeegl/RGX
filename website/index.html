@@ -20,60 +20,65 @@
             </p>
         </div>
 
+        <!-- Main content -->
         <div class = "main-content">
+            
+            <!-- Choose functionality -->
+            <div class="btns">
+                <form name="form">
+                    <!-- Search -->
+                    <input type="radio" id="remove" name='filter' value="remove" checked>
+                    <label for="Remove">Remove</label><br>
+                    <!-- Replace -->
+                    <input type="radio" id="replace" name='filter' value="replace">
+                    <label for="Replace">Replace</label><br>
+                </form>
+            </div>
+
             <!-- Filtering Section  -->
-            <div class="section" id="filter">
-
-                <!-- Functionality selection -->
-                <div class="btns">
-                    <form name="form">
-                        <!-- Remove -->
-                        <input type="radio" id="remove" name='filter' value="remove" checked>
-                        <label for="Remove">Remove</label><br>
-                        <!-- Replace -->
-                        <input type="radio" id="replace" name='filter' value="replace">
-                        <label for="Replace">Replace</label><br>
-                    </form>
+            <div id="filter">
+                <!-- Input bars -->
+                <div id="bars">
+                    <!-- Search -->
+                    <textarea name="" id="search-bar" cols="30" rows="1" placeholder="Enter word..."></textarea>
+                    <!-- Replace -->
+                    <textarea name="" id="replace-textarea" cols="30" rows="1" placeholder="Enter word to replace..."></textarea>
                 </div>
-
-                <!-- Search bar -->
-                <textarea name="" class="search-and-remove-bars" id="search-bar" cols="30" rows="1" placeholder="Enter word..."></textarea>
-
-                <!-- Remove section -->
-                <div class="remove" id="remove-section">
-                    <button type="button" id="remove-one-button" class="button">Remove</button>
-                    <button type="button" id="remove-all-button" class="button">Remove All</button>
-                </div>
-
-                <!-- Replace section -->
-                <div class="replace" id="replace-section">
-                    <!-- Bar -->
-                    <textarea name="" class="search-and-remove-bars" id="replace-textarea" cols="30" rows="1" placeholder="Enter word to replace..."></textarea>
-                    <!-- Buttons -->
-                    <div class="replace-buttons">
-                        <button type="button" id="replace-one-button" class="button">Replace</button>
-                        <button type="button" id="replace-all-button" class="button">Replace All</button>
+                <!-- Edit buttons -->
+                <div id="edit">
+                    <!-- Delete -->
+                    <div id="remove-section">
+                        <button type="button" id="remove-one-button" >Remove</button>
+                        <button type="button" id="remove-all-button" >Remove All</button>
+                    </div>
+                    <!-- Replace -->
+                    <div id="replace-section">
+                        <div class="replace-buttons">
+                            <button type="button" id="replace-one-button" >Replace</button>
+                            <button type="button" id="replace-all-button" >Replace All</button>
+                        </div>
+                    </div>
+                    <!-- Previous / next -->
+                    <div class="next-or-before-buttons">
+                        <button type="button" id="back-button" >Back</button>
+                        <button type="button" id="next-button" >Next</button>
                     </div>
                 </div>
-
-                <!-- Back / next buttons-->
-                <div class="next-or-before-buttons">
-                    <button type="button" id="back-button" class="button">Back</button>
-                    <button type="button" id="next-button" class="button">Next</button>
+                <!-- Copy and clear -->
+                <div id="copy-clear">
+                    <button type="button" id="clear-button" >Clear</button>
+                    <button  id="copy-button">Copy to clipboard</button>
                 </div>
-
             </div>
 
             <!-- Input section -->
-            <div id="input-box" contenteditable="true"></div>
-            
             <div id="input-v2-container">
                 <textarea id="input-v2-textbox" placeholder="Enter your text here."></textarea>
                 <div id="input-v2-highlight"></div>    
             </div>
 
             <!-- Counters -->
-            <div class="wordsAndCharacters" id="counters">
+            <div id="counters">
                 <div>
                     <div>Words</div>
                     <div id="word-count">0</div>
@@ -98,12 +103,6 @@
                     <div>Most common word</div>
                     <div id="most-common-word">no text,</div>
                 </div>
-            </div>
-
-            <!-- Copy and clear -->
-            <div>
-                <button type="button" id="clear-button" class="button">Clear</button>
-                <button class="button" id="copy-button">Copy to clipboard</button>
             </div>
 
         </div>
