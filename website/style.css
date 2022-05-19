@@ -52,13 +52,6 @@ button, label, textarea, #input-v2-container{
     border-radius: 3px;
 }
 
-button:active {
-    background-color: orange;
-    box-shadow: 0 5px gray;
-    transform: translateY(2px);
- }
-
-
 /* Change to flex row layout */
 #filter,
 #counters,
@@ -106,6 +99,10 @@ body, textarea, button {
   * 
   */
 
+  #replace-textarea {
+      display: none;
+  }
+
 
 /* Functionality selection buttons */
 
@@ -133,7 +130,9 @@ html .btns, section {
 }
 
 .form input:checked + label {
-	background-color: var(--color-buttons);
+	background-color: transparent;
+    border: 3px solid var(--color-buttons);
+    color: var(--color-buttons);
 }
 
 /* .btns {max-width: 850px; width: 100%; margin: 0 auto;}
