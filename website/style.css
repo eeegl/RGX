@@ -34,11 +34,18 @@
     flex-direction: column;
 }
 
+/* Variables */
+:root {
+    /* --background-color: rgb(29, 26, 24); */
+    --background-color: aliceblue;
+
+}
+
 /* Settings affecting the whole webpage */
 body {
-    background-color: aliceblue;
+    background-color: var(--background-color);
     color: #555555;
-    font-family: "Lucida Console", Monaco, monospace;
+    font-family: Arial, Helvetica, sans-serif;
     margin: auto;
     width: 90%;
 }
@@ -200,12 +207,33 @@ mark {
     padding: 40px;
 }
 
+#counters > div {
+    margin: 0;
+    height: 150px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    border-right: 1px solid red;
+}
 
-.counter {
-    display: inline-block;
-    width: 10%;
-    height:100px;
-    font-size: 13;
+#counters > div:last-of-type {
+    border-right: none;
+}
+
+#counters h3 {
+    margin: 0;
+    background: green;
+    height: 2em;
+}
+
+#counters div div {
+    margin: 0;
+    padding: 1em;
+    /* background: lightblue; */
+    font-size: 2em;
+    white-space: nowrap;
 }
 
 
@@ -213,15 +241,6 @@ mark {
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
-
-.wordsAndCharacters p {
-    
-    background-color: red;
-    display: inline-flex;
-    height: 150px;
-    width: 100%;
-    border: 5px solid #000000;
 }
 
 .button {

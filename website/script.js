@@ -327,17 +327,17 @@ let jumpToMatch = () => {
 
 /* Update text counts */
 let updateCounts = () => {
-    WORDS.innerHTML = "Words: " + getWordCount();
-    CHARS.innerHTML = "Characters: " + getCharCount();
-    SPACES.innerHTML = "Characters (excluding spaces): " + (getCharCount() - getSpaceCount());
-    SENTENCES.innerHTML = "Sentences: " + getSentenceCount();
+    WORDS.innerHTML = getWordCount();
+    CHARS.innerHTML = getCharCount();
+    SPACES.innerHTML = getCharCount() - getSpaceCount();
+    SENTENCES.innerHTML = getSentenceCount();
     // Index of current match against number of total matches
     if (isEmpty(search) || numOfMatches === 0) {
-        MATCHES.innerHTML = 'Matches: 0/0';
+        MATCHES.innerHTML = '0/0';
     } else {
-        MATCHES.innerHTML = 'Matches: ' + index + '/' + numOfMatches;
+        MATCHES.innerHTML = index + '/' + numOfMatches;
     }
-    MOST_COMMON_WORD.innerHTML = "Most common word: " + getMostFrequentWords();
+    MOST_COMMON_WORD.innerHTML = getMostFrequentWords();
     //getMostCommonWords()[1] + getMostCommonWords()[2]
     //+ getMostCommonWords()[3] + getMostCommonWords()[4];
 }
