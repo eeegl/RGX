@@ -22,18 +22,26 @@
 
         <!-- Main content -->
         <div class = "main-content">
-            
-            <!-- Choose functionality -->
-            <div class="btns">
-                <form name="form">
-                    <!-- Search -->
-                    <input type="radio" id="remove" name='filter' value="remove" checked>
-                    <label for="Remove">Remove</label><br>
-                    <!-- Replace -->
-                    <input type="radio" id="replace" name='filter' value="replace">
-                    <label for="Replace">Replace</label><br>
-                </form>
-            </div>
+            <!-- Filtering Section  -->
+            <div class="section" id="filter">
+
+                <!-- Functionality selection -->
+                
+                <div class="btns">
+                    <form class="form cf">
+                    <section class="plan cf">
+                            <!-- Remove -->
+                            <input type="radio" class="radio__input" id="remove" name='filter' value="remove" checked>
+                            <label class="radio__label" for="remove"> Remove</label>
+                            <!-- Replace -->
+                            <input type="radio" class="radio__input" id="replace" name='filter' value="replace">
+                            <label class="radio__label" for="replace">Replace</label>
+                     </section>
+                    </form>
+                </div>
+
+                <!-- Search bar -->
+                <textarea name="" class="search-and-remove-bars" id="search-bar" cols="30" rows="1" placeholder="Enter word..."></textarea>
 
             <!-- Filtering Section  -->
             <div id="filter">
