@@ -38,6 +38,12 @@
     display: none;
 }
 
+.container {
+    /* background: orange; */
+    width: 66vw;
+    justify-content: space-around;
+}
+
 /* Base settings */
 * {
     margin: 0;
@@ -47,6 +53,17 @@
     box-sizing: border-box;
     
 }
+
+button, label, textarea, #input-v2-container{
+    border-radius: 3px;
+}
+
+button:active {
+    background-color: orange;
+    box-shadow: 0 5px rgb(31, 29, 29);
+    transform: translateY(1px);
+ }
+
 
 /* Change to flex row layout */
 #filter,
@@ -59,10 +76,13 @@
 }
 
 body {
-    width: 66vw;
+    width: 100vw;
+    height: 100vh;
     margin: auto;
     color: var(--color-text);
     background-color: var(--color-background);
+    justify-content: center;
+    align-items: center;
 }
 
 /* Text */
@@ -74,11 +94,14 @@ body, textarea, button {
 /* Colors */
 :root {
     --color-background: #39332F;
+    /* Inferior alternative */
+    /* --color-background: #0D1F2D; */
     --color-boxes: #F5F3E5;
     --color-buttons: #776F6D;
-    --color-text: black;
+    --color-text: #F5F3E5;
     --color-highlight: #FFEB00;
     --color-selected: lightsalmon;
+    --color-textbox-text: black;
 }
 
 /* Dimensions */
@@ -94,6 +117,10 @@ body, textarea, button {
   * 
   */
 
+  
+#replace-textarea {
+    display: none;
+}
 
 /* Functionality selection buttons */
 
@@ -115,18 +142,16 @@ html .btns, section {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
     border: 1px solid var(--color-background);
-    /* padding: 1rem; */
-	/* position: relative; */
-	/* display: block; */
 }
 
 .form input:checked + label {
 	background-color: var(--color-buttons);
 }
 
-/* .btns {max-width: 850px; width: 100%; margin: 0 auto;}
-.four { width: 32.26%; max-width: 32.26%;} */
 
+.klass {
+    background: plum;
+}
 /* Basic input box styling */
 textarea {
     width: 30em;
@@ -134,9 +159,13 @@ textarea {
     resize: none;
 }
 
+#input-v2-container {
+    margin-top: 1em;
+}
+
 textarea, #input-v2-container {
     background: var(--color-boxes);
-    color: var(--color-text);
+    color: var(--color-textbox-text);
 }
 
 /* Styling for filter and edit section */
@@ -146,13 +175,14 @@ textarea, #input-v2-container {
     justify-content: left;
 }
 
-#filter button, label {
-    width: var(--btn-width);
+#filter button, .btns label {
     padding: 1rem;
-    text-transform: uppercase;
+    width: var(--btn-width);
     color: var(--color-background);
-    /* font-weight: bold; */
     background: var(--color-buttons);
+    font-family: "Arial Black", Helvetica, sans-serif;
+    text-transform: uppercase;
+    text-align: center;
     cursor: pointer;
 }
 
@@ -289,8 +319,8 @@ mark {
 /* Miscellaneous */
 
 #counters > div {
-    margin: 0;
-    height: 150px;
+    margin: 0 0 1em;
+    height: 6rem;
     width: 100%;
     justify-content: space-evenly;
     text-align: center;
@@ -349,8 +379,9 @@ button:hover {
     color: darkorange;
 }
 
-#footer {
-    background-image: url(https://giffiles.alphacoders.com/360/36032.gif);
-    background-size: cover;
-    color: white;
+footer {
+    /* font-family: "Arial Black", Helvetica, sans-serif; */
+    text-align: center;
+    font-size: 0.6rem;
+    /* background: lime; */
 }
