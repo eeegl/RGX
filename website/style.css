@@ -45,6 +45,7 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    
 }
 
 /* Change to flex row layout */
@@ -275,15 +276,46 @@ mark {
 
 #counters > div:last-of-type {
     border-right: none;
+    
+}
+
+#counters{
+    overflow: hidden;
+    word-break: break-all;
+    background-color: purple;
+    
+    
+}
+
+#most-common-word-box{
+    overflow: hidden;
+    background-color: green;
+}
+
+#most-common-word{
+    overflow: scroll;
+    background-color: white;
+
+    -ms-word-break: break-all;
+    word-break: break-all;
+
+    /* Non standard for WebKit */
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+    height: 2rem;
+    
+    
+
 }
 
 #counters div div {
+    background-color: blue;
     padding: 1em;
     white-space: nowrap;
-}
-
-#counters {
-    justify-content: center;
+    /* order: 1; */
 }
 
 button {
