@@ -138,8 +138,10 @@ let findSelected = () => {
     if (selected === 'remove') {
         document.getElementById("remove-section").style.display = "flex";
         document.getElementById("replace-section").style.display = "none";
+        document.getElementById("replace-textarea").style.display = "none";
     } else if (selected === 'replace') {
         document.getElementById("replace-section").style.display = "flex";
+        document.getElementById("replace-textarea").style.display = "flex";
         document.getElementById("remove-section").style.display = "none";
     }
 }
@@ -151,24 +153,12 @@ radioBtns.forEach(radioBtn => {
 //Clear button clears all counters and resets their value
 CLEAR_BUTTON.onclick = function () {
     TEXT.value = "";
-
-    WORD_COUNTER.value = 0;
-    WORD_COUNTER.innerHTML = "Words: 0";
-
-    CHAR_COUNTER.value = 0;
-    CHAR_COUNTER.innerHTML = "Characters: 0";
-
-    CHAR_SPACE_COUNTER.value = 0;
-    CHAR_SPACE_COUNTER.innerHTML = "Characters (excluding spaces): 0";
-
-    WORD_MATCH.value = 0;
-    WORD_MATCH.innerHTML = "Matches: 0";
-
-    SENTENCE_COUNT.value = 0;
-    SENTENCE_COUNT.innerHTML = "Sentences: 0";
-    
-    MOST_COMMON_WORD.value = 0;
-    MOST_COMMON_WORD.innerHTML = "Most common word: 0";
+    WORD_COUNTER.innerHTML = "0";
+    CHAR_COUNTER.innerHTML = "0";
+    CHAR_SPACE_COUNTER.innerHTML = "0";
+    WORD_MATCH.innerHTML = "0/0";
+    SENTENCE_COUNT.innerHTML = "0";
+    MOST_COMMON_WORD.innerHTML = "0";
     removeHighlighting();
 }
 
