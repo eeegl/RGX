@@ -53,6 +53,10 @@ body {
 .btns {max-width: 850px; width: 100%; margin: 0 auto;}
 .four { width: 32.26%; max-width: 32.26%;}
 
+.form .plan input{
+	display: none;
+}
+
 .form label{
 	position: relative;
 	color: #fff;
