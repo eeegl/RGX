@@ -13,8 +13,8 @@
  *       – TABLE OF CONTENTS –       *
  *                                   *
  *      I....Global                  *
- *      II...Colors                  *
- *      III..Text                    *
+ *      II...Page elements           *
+ *      III..                        *
  *       :. i....???                 *
  *       :. ii...???                 *
  *       :. iii..???                 *
@@ -25,76 +25,109 @@
  *                                   *
  * * * * * * * * * * * * * * * * * * */
 
+
+ /* 
+  * 
+  * I. GLOBAL
+  * 
+  */
+
+
+/* Hide elements while */
+.box-1 {
+    display: none;
+}
+
+/* Base settings */
 * {
-    padding: 0;
     margin: 0;
-    box-sizing: border-box;
-    /* display: flex; */
+    padding: 0;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
-/* Variables */
-:root {
-    /* --background-color: rgb(29, 26, 24); */
-    --background-color: aliceblue;
-
+/* Change to flex row layout */
+#filter,
+#counters,
+#remove-section,
+.replace-buttons,
+.next-or-before-buttons,
+.btns form {
+    flex-direction: row;
 }
 
-/* Settings affecting the whole webpage */
 body {
-    background-color: var(--background-color);
-    color: #555555;
-    font-family: Arial, Helvetica, sans-serif;
+    width: 66vw;
     margin: auto;
-    width: 90%;
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+/* Text */
+body, textarea, button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+/* Colors */
+:root {
+    --color-background: #F5F3E5;
+    --color-boxes: #F8F8F7;
+    --color-buttons: #776F6D;
+    --color-text: #776F6D;
+    --color-highlight: #FFEB00;
+    --color-selected: lightsalmon;
+}
+
+ /* 
+  * 
+  * II. PAGE ELEMENTS
+  * 
+  */
+
+
+/* Basic input box styling */
+textarea {
+    width: 30em;
+    padding: 1em;
+    margin: 0.5em 0;
+    resize: none;
+}
+
+textarea, #input-v2-container {
+    background: var(--color-boxes);
+    color: var(--color-text);
+}
+
+/* Styling for filter and edit section */
+#filter {
+    height: 20em;
+    background: rebeccapurple;
+}
+
+#bars {
+    background: mediumaquamarine;
+}
+
+#edit {
+    background: sandybrown;
+}
+
+#copy-clear {
+    background: powderblue;
 }
 
 .btns form {
-    display: flex;
-    flex-direction: row;
     justify-content: left;
 }
 
-form > input {
-    width: 100px;
-    height: 100px;
-    background: green;
-}
-
-.remove {
-    display: flex;
-    flex-direction: row;
-}
-
-.replace {
-    display: none;    
-}
-
-.replace-buttons {
-    display: flex;
-    flex-direction: row;
-}
-
-.next-or-before-buttons {
-    display: flex;
-    flex-direction: row;
-}
-
 #replace-section {
-    background:yellow;
-}
-
-.search-and-remove-bars {
-    width: 30em;
-    padding: 1em;
-    resize: none;
-    margin: 0.5em 0;
+    display: none;    
 }
 
 /* Container class affects almost the whole document */
 .container {
-    font-size: 12px;
     background-color: yellow;
 }
 
@@ -131,15 +164,13 @@ form > input {
     height: 25em;
     position: relative;
     inset: 0;
-    background: white;
     box-sizing: border-box;
     
 }
 
-#input-v2-container>* {
+#input-v2-container > * {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
-    font-size: 1.4em;
     padding: 1em;
     width: 100%;
     height: 100%;
@@ -173,46 +204,29 @@ form > input {
 }
 
 #input-v2-textbox {
-    /* background: red; */
     z-index: 1;
     background: transparent;
     resize: none;
 }
 
-#input-v2-textbox:focus {
-    box-shadow: red;
-}
-
 /* TEXT HIGHLIGHTING */
-
 
 mark {
     display: inline;
-    background: yellow;
+    background: var(--color-highlight);
     color: transparent;
 }
 
 .selected {
-    background: lightsalmon;
+    background: var(--color-selected);
 }
-
-/* .highlight-selection {
-    display: inline;
-    background: lime;
-} */
 
 /* Miscellaneous */
-
-.section {
-    padding: 40px;
-}
 
 #counters > div {
     margin: 0;
     height: 150px;
     width: 100%;
-    display: flex;
-    flex-direction: column;
     justify-content: space-evenly;
     text-align: center;
     border-right: 1px solid red;
@@ -222,28 +236,16 @@ mark {
     border-right: none;
 }
 
-#counters h3 {
-    margin: 0;
-    background: green;
-    height: 2em;
-}
-
 #counters div div {
-    margin: 0;
     padding: 1em;
-    /* background: lightblue; */
-    font-size: 2em;
     white-space: nowrap;
 }
 
-
-.wordsAndCharacters {
-    display: flex;
-    flex-direction: row;
+#counters {
     justify-content: center;
 }
 
-.button {
+button {
     width: fit-content;
     padding: 10px;
     display: inline;
