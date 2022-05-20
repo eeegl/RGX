@@ -91,12 +91,12 @@ let words = [];
 
 /* Update text when user types into textbox */
 TEXT.addEventListener('input', () => {
+    getMostFrequentWords();
     readData();
     setHighlightText(text);
     highlightMatches();
     markCurrentMatch();
     updateCounts();
-    getMostFrequentWords();
 })
 
 /* Update text when user types into search bar */
@@ -134,7 +134,6 @@ let radioBtns = document.querySelectorAll("input[name='filter']");
 
 let findSelected = () => {
     let selected = document.querySelector("input[name='filter']:checked").value;
-    console.log(selected);
     if (selected === 'remove') {
         document.getElementById("remove-section").style.display = "flex";
         document.getElementById("replace-section").style.display = "none";
@@ -156,9 +155,9 @@ CLEAR_BUTTON.onclick = function () {
     WORD_COUNTER.innerHTML = "0";
     CHAR_COUNTER.innerHTML = "0";
     CHAR_SPACE_COUNTER.innerHTML = "0";
-    WORD_MATCH.innerHTML = "0/0";
+    WORD_MATCH.innerHTML = "0";
     SENTENCE_COUNT.innerHTML = "0";
-    MOST_COMMON_WORD.innerHTML = "-";
+    MOST_COMMON_WORD.innerHTML = "–"; // Dash, not hyphen!
     removeHighlighting();
 }
 
@@ -295,6 +294,8 @@ let changeCurrentMatch = key => {
 }
 
 let jumpToMatch = () => {
+    // Do nothing if text is empty or no match is found
+    if (isEmpty(getText()) || getCurrentMatch() === null) { return; }
     // Get position elements
     let box = TEXT.getBoundingClientRect();
     let match = getCurrentMatch().getBoundingClientRect();
@@ -322,12 +323,14 @@ let updateCounts = () => {
     SPACES.innerHTML = getCharCount() - getSpaceCount();
     SENTENCES.innerHTML = getSentenceCount();
     // Index of current match against number of total matches
-    if (isEmpty(search) || numOfMatches === 0) {
-        MATCHES.innerHTML = '0/0';
+    if (!matchExists()) {
+        MATCHES.innerHTML = '0';
     } else {
         MATCHES.innerHTML = index + '/' + numOfMatches;
     }
+
     MOST_COMMON_WORD.innerHTML = getMostFrequentWords();
+    
     //getMostCommonWords()[1] + getMostCommonWords()[2]
     //+ getMostCommonWords()[3] + getMostCommonWords()[4];
 }
@@ -339,11 +342,10 @@ let copyToClipboard = () => {
 
 /* Remove currently selected match in text */
 let removeCurrentMatch = () => {
-    let search = getSearch();
+    if (!matchExists()) { return; }
+    // Get text in HTML-format for treatment
     let textHTML = getTextHTML();
     let currentMatchHTML = getCurrentMatch().outerHTML;
-    // Do nothing if search is empty
-    if (isEmpty(search)) { return; }
     // Remove current match from text
     let removedMatchHTML = textHTML.replace(currentMatchHTML, '');
     // Strip HTML formatting and add to textbox
@@ -353,7 +355,7 @@ let removeCurrentMatch = () => {
 
 /* Remove all matches in text */
 let removeAllMatches = () => {
-    if (isEmpty(search)) { return; }
+    if (!matchExists()) { return; }
     let newText = text.replaceAll(search, '');
     TEXT.value = newText;
 }
@@ -479,6 +481,11 @@ let isEmpty = text => {
     return text === '';
 }
 
+/* Check if there exists at least one search match */
+let matchExists = () => {
+    return getMatchCount() > 0;
+}
+
 /* Sync scrolling between textbox and highlighting div */
 let syncTextAndHighlight = () => {
     HIGHLIGHT.scrollTop = TEXT.scrollTop;
@@ -554,8 +561,8 @@ let updateMostCommonWord = () => {
 
 /* Get k most frequent words */
 let getMostFrequentWords = () => {
-    if (isEmpty(text)){
-        return ['–'];
+    if (isEmpty(getText().trim())) {
+        return ['–']; // Dash, not hyphen!
     }
     
     words = getWords();

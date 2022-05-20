@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-    <title style="display:none;">Word Counter</title>
+    <title style="display:none;">Text Analyzer</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,9 +42,9 @@
                 <!-- Input bars -->
                 <div id="bars">
                     <!-- Search -->
-                    <textarea name="" id="search-bar" cols="30" rows="1" placeholder="Enter word..."></textarea>
+                    <textarea name="" id="search-bar" cols="30" rows="1" placeholder="Enter search..."></textarea>
                     <!-- Replace -->
-                    <textarea name="" id="replace-textarea" cols="30" rows="1" placeholder="Enter word to replace..."></textarea>
+                    <textarea name="" id="replace-textarea" cols="30" rows="1" placeholder="Enter replacement..."></textarea>
                 </div>
                 <!-- Edit buttons -->
                 <div id="edit">
@@ -75,7 +75,7 @@
 
             <!-- Input section -->
             <div id="input-v2-container">
-                <textarea id="input-v2-textbox" placeholder="Enter your text here."></textarea>
+                <textarea id="input-v2-textbox" placeholder="Enter your text here..."></textarea>
                 <div id="input-v2-highlight"></div>    
             </div>
 
@@ -95,7 +95,7 @@
                 </div>
                 <div>
                     <div>Matches</div>
-                    <div id="word-match">0/0</div>
+                    <div id="word-match">0</div>
                 </div>
                 <div>
                     <div>Sentences</div>
@@ -103,7 +103,7 @@
                 </div>
                 <div id="most-common-word-box">
                     <div>Most common <br> word</div>
-                    <p id="most-common-word">–</p>
+                    <p id="most-common-word">–</p> <!-- Dash, not hyphen! -->
                 </div>
             </div>
 
