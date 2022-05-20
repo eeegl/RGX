@@ -54,7 +54,7 @@ body {
 .container {
     height: 100vh;
     width: 66vw;
-    justify-content: space-around;
+    justify-content: center;
 }    
 
 /* Order items from left to right */
@@ -104,11 +104,22 @@ body, textarea, button {
     --btn-rounding: 3px;
 }
 
+
  /* 
   * 
   * II. PAGE ELEMENTS
   * 
   */
+
+h1 {
+    font-family: "Arial Black", Helvetica, sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+#header p {
+    margin-bottom: 2rem;
+}
 
 
 #counters div div:first-of-type {
