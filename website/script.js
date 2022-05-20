@@ -555,7 +555,7 @@ let updateMostCommonWord = () => {
 /* Get k most frequent words */
 let getMostFrequentWords = () => {
     if (isEmpty(text)){
-        return ['no text', ''];
+        return ['–'];
     }
     
     words = getWords();
