@@ -12,9 +12,9 @@
  *                                   *
  *       – TABLE OF CONTENTS –       *
  *                                   *
- *      I....Global                  *
- *      II...Page elements           *
- *      III..                        *
+ *      I....Variables               *
+ *      II...Global                  *
+ *      III..Page elements           *
  *       :. i....???                 *
  *       :. ii...???                 *
  *       :. iii..???                 *
@@ -32,40 +32,32 @@
   * 
   */
 
-
-/* Hide elements while */
-.box-1 {
-    display: none;
-}
-
-.container {
-    /* background: orange; */
-    width: 66vw;
-    justify-content: space-around;
-}
-
-/* Base settings */
+/* Remove unnessecary whitespace and order items vertically */
 * {
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    
 }
 
-button, label, textarea, #input-v2-container{
-    border-radius: 3px;
+/* Center content and add color */
+body {
+    margin: auto;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    justify-content: center;
+    align-items: center;
 }
 
-button:active {
-    background-color: orange;
-    box-shadow: 0 1px rgb(31, 29, 29);
-    transform: translateY(1px);
- }
+/* Set content dimensions */
+.container {
+    height: 100vh;
+    width: 66vw;
+    justify-content: space-around;
+}    
 
-
-/* Change to flex row layout */
+/* Order items from left to right */
 #filter,
 #counters,
 #remove-section,
@@ -75,23 +67,24 @@ button:active {
     flex-direction: row;
 }
 
-body {
-    /* width: 100vw; */
-    height: 100vh;
-    margin: auto;
-    color: var(--color-text);
-    background-color: var(--color-background);
-    justify-content: center;
-    align-items: center;
+/* Add rounding to corners */
+button, label, textarea, #input-v2-container{
+    border-radius: 3px;
 }
 
-/* Text */
+/* Add pushdown effect when button is clicked */
+button:active {
+    box-shadow: 0 1px rgb(31, 29, 29);
+    transform: translateY(1px);
+}
+
+/* Text styling */
 body, textarea, button {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
 }
 
-/* Colors */
+/* Color variables */
 :root {
     --color-background: #39332F;
     /* Inferior alternative */
@@ -104,12 +97,12 @@ body, textarea, button {
     --color-textbox-text: black;
 }
 
-/* Dimensions */
+/* Dimension variables */
 :root {
     --btn-height: 3.2rem;
     --btn-width: 9rem;
+    --btn-rounding: 3px;
 }
-
 
  /* 
   * 
@@ -364,11 +357,6 @@ button {
     display: inline;
 }
 
-/* Reference to link. Notice that it looks through the whole href-string for "wiki" */
-a[href*="wiki"] {
-    color: darkblue;
-}
-
 /* References hovering on <a> elements such as links */
 a:hover {
     color: darkorange;
@@ -383,4 +371,5 @@ footer {
     text-align: center;
     font-size: 0.6rem;
     /* background: lime; */
+    display: none;
 }
